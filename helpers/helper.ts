@@ -10,4 +10,8 @@ export class Helper{
     async visitpage(expectedUrl: string){
         await this.page.goto(expectedUrl);
     }
+
+    async textAssertion(selector:Locator, text:string){
+        await expect(selector).toHaveText(text);
+    }
 }
