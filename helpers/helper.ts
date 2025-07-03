@@ -14,4 +14,8 @@ export class Helper{
     async textAssertion(selector:Locator, text:string){
         await expect(selector).toHaveText(text);
     }
+
+    async urlAssertion(url:string){
+        await expect(this.page).toHaveURL(url);
+    }
 }
