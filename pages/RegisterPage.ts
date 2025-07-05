@@ -19,8 +19,24 @@ export class RegiserPage{
     readonly daySelector: Locator;
     readonly monthSelector: Locator;
     readonly yearSelector: Locator;
+    readonly newsLetterSelector: Locator;
+    readonly specialOfferSelector: Locator;
 
-
+    readonly firstNameSelector: Locator;
+    readonly lastNameSelector: Locator;
+    readonly companySelector: Locator;
+    readonly address1Selector: Locator;
+    readonly address2Selector: Locator;
+    readonly stateSelector: Locator;
+    readonly citySelector: Locator;
+    readonly zipcodeSelector: Locator;
+    readonly mobileNumberSelector: Locator;
+    readonly countrySelector: Locator;
+    readonly createAccountSelector: Locator;
+    readonly accountCreatedSelectcor: Locator;
+    readonly continueButtonSelector: Locator;
+    readonly deleteAccountSelector: Locator;
+    readonly logoutSelector: Locator;
 
 
     constructor(page:Page){
@@ -42,6 +58,27 @@ export class RegiserPage{
         this.daySelector = page.locator("#days");
         this.monthSelector = page.locator("#months");
         this.yearSelector = page.locator("#years");
+        this.newsLetterSelector = page.locator("#newsletter");
+        this.specialOfferSelector = page.locator("#optin");
+
+
+        this.firstNameSelector = page.locator("#first_name");
+        this.lastNameSelector = page.locator("#last_name");
+        this.companySelector = page.locator("#company");
+        this.address1Selector = page.locator("#address1");
+        this.address2Selector = page.locator("#address2");
+        this.stateSelector = page.locator("#state");
+        this.citySelector = page.locator("#city");
+        this.zipcodeSelector = page.locator("#zipcode");
+        this.mobileNumberSelector = page.locator("#mobile_number");
+        this.countrySelector = page.locator("#country");
+        this.createAccountSelector = page.locator("button[data-qa='create-account']");
+        this.accountCreatedSelectcor = page.locator("h2[data-qa='account-created']");
+        this.continueButtonSelector = page.locator("a[data-qa='continue-button']");
+
+
+        this.deleteAccountSelector = page.locator('a[href="/delete_account"]');
+        this.logoutSelector = page.locator('a[href="/logout"]');
 
     }
 
@@ -90,9 +127,42 @@ export class RegiserPage{
         await this.daySelector.selectOption({label:"1"});
         await this.monthSelector.selectOption({label:"January"});
         await this.yearSelector.selectOption({label:"2000"});
+        await this.newsLetterSelector.check();
+        await expect(this.newsLetterSelector).toBeChecked();
+        await this.specialOfferSelector.check();
+        await expect(this.specialOfferSelector).toBeChecked();
     }
 
+    async fillAddressInformation(){
+        await this.firstNameSelector.fill("Bhim");
+        await this.lastNameSelector.fill("Lamichhane");
+        await this.companySelector.fill("Test Company");
+        await this.address1Selector.fill("Kalika Margh 25, Sanepa");
+        await this.address2Selector.fill("Lalitpur");
+        await this.countrySelector.selectOption({label:"United States"});
+        await this.stateSelector.fill("Provience 4");
+        await this.citySelector.fill("Balen City");
+        await this.zipcodeSelector.fill("6969");
+        await this.mobileNumberSelector.fill("+977-9814412345");
+        await expect(this.createAccountSelector).toHaveText("Create Account");
+        await this.createAccountSelector.click();
+    }
 
+    async accountCreatedLabelAssertion(expectedText:string){
+        await expect(this.accountCreatedSelectcor).toHaveText(expectedText);
+    }
 
+    async continueButtonAssertionAndClick(expectedText:string){
+        await expect(this.continueButtonSelector).toHaveText(expectedText);
+        await this.continueButtonSelector.click();
+    }
+
+    async logoutAssertion(expectedText: string, expectedHref: string) {
+        await this.helper.assertLinkWithTextAndHrefAssertion(this.logoutSelector,expectedText,expectedHref);
+    }
+
+    async deleteAccountAssertion(expectedText: string, expectedHref: string) {
+        await this.helper.assertLinkWithTextAndHrefAssertion(this.deleteAccountSelector,expectedText,expectedHref);
+    }
 
 }

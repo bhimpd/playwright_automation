@@ -40,6 +40,15 @@ test.only("Should fill the input,click Sign and Assert the text in Register Page
     await register.assertAccountAndAddressLabel(1,"Address Information")
 
     await register.fillAccountInformation();
+    await register.fillAddressInformation();
+
+    await helper.urlAssertion("https://automationexercise.com/account_created");
+    await register.accountCreatedLabelAssertion("Account Created!")
+    await register.continueButtonAssertionAndClick("Continue")
+    
+    await helper.urlAssertion("https://automationexercise.com");
+    await register.logoutAssertion("Logout","/logout")
+    await register.deleteAccountAssertion("Delete Account","/delete_account")
 
     await page.waitForTimeout(5000);
 });

@@ -18,4 +18,9 @@ export class Helper{
     async urlAssertion(url:string){
         await expect(this.page).toHaveURL(url);
     }
+
+    async assertLinkWithTextAndHrefAssertion(locator: Locator, expectedText: string, expectedHref: string) {
+        await expect(locator).toHaveText(expectedText);
+        await expect(locator).toHaveAttribute('href', expectedHref);
+    }
 }
