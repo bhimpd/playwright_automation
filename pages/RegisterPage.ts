@@ -119,10 +119,12 @@ export class RegiserPage{
     }
 
 
-    async fillAccountInformation(){
+    async fillAccountInformation(expectedemail:string){
         await this.titleSelector.click();
+        console.log(`Using email: ${expectedemail}`);
+
         await expect(this.signUpnameSelector).toHaveValue('Bhim');
-        await expect(this.signUpemailSelector).toHaveValue('dreamypd73@gmail.com');
+        await expect(this.signUpemailSelector).toHaveValue(expectedemail);
         await this.passwordSelector.fill("Password1!");
         await this.daySelector.selectOption({label:"1"});
         await this.monthSelector.selectOption({label:"January"});

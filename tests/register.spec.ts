@@ -1,7 +1,8 @@
 import { test,expect } from "@playwright/test";
 import { Helper } from "../helpers/helper";
 import { RegiserPage } from "../pages/RegisterPage";
-import { beforeEach } from "node:test";
+import { faker } from '@faker-js/faker';
+
 
 test.beforeEach("Login Page", async({page}) =>{
     const helper = new Helper(page);
@@ -30,8 +31,11 @@ test.only("Should fill the input,click Sign and Assert the text in Register Page
     const helper = new Helper(page);
     const register = new RegiserPage(page);
 
+    const randomEmail = `dreamypd73+${faker.string.alphanumeric(6)}@gmail.com`;
+    
     await register.fillname("Bhim");
-    await register.fillemail("dreamypd73@gmail.com");
+    await register.fillemail(randomEmail);
+    await page.waitForTimeout(4000);
 
     register.clickSignIn();
     await helper.urlAssertion("https://automationexercise.com/signup");
@@ -39,7 +43,8 @@ test.only("Should fill the input,click Sign and Assert the text in Register Page
     await register.assertAccountAndAddressLabel(0,"Enter Account Information")
     await register.assertAccountAndAddressLabel(1,"Address Information")
 
-    await register.fillAccountInformation();
+    await register.fillAccountInformation(randomEmail);
+    await page.waitForTimeout(3000);
     await register.fillAddressInformation();
 
     await helper.urlAssertion("https://automationexercise.com/account_created");
