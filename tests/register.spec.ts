@@ -26,11 +26,11 @@ test("Should assert Text in Auth Page", async({page})=>{
     await page.waitForTimeout(5000);
 });
 
-test("Should fill the input,click Sign and Assert the text in Register Page", async({page})=>{
+test.only("Should fill the input,click Sign and Assert the text in Register Page", async({page})=>{
     const helper = new Helper(page);
     const register = new RegiserPage(page);
 
-    await register.fillname("Bhim Prasad Lamichhane");
+    await register.fillname("Bhim");
     await register.fillemail("dreamypd73@gmail.com");
 
     register.clickSignIn();
@@ -38,6 +38,8 @@ test("Should fill the input,click Sign and Assert the text in Register Page", as
     
     await register.assertAccountAndAddressLabel(0,"Enter Account Information")
     await register.assertAccountAndAddressLabel(1,"Address Information")
+
+    await register.fillAccountInformation();
 
     await page.waitForTimeout(5000);
 });

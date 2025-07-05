@@ -12,6 +12,15 @@ export class RegiserPage{
     readonly nameSelector:Locator;
     readonly emailSelector:Locator;
     readonly accountAndAddressInfoSelector:Locator;
+    readonly titleSelector: Locator;
+    readonly signUpnameSelector: Locator;
+    readonly signUpemailSelector: Locator;
+    readonly passwordSelector: Locator;
+    readonly daySelector: Locator;
+    readonly monthSelector: Locator;
+    readonly yearSelector: Locator;
+
+
 
 
     constructor(page:Page){
@@ -26,6 +35,13 @@ export class RegiserPage{
         this.emailSelector = page.locator("input[data-qa='signup-email']");
 
         this.accountAndAddressInfoSelector = page.locator(".login-form h2.title.text-center");
+        this.titleSelector = page.locator("#uniform-id_gender1");
+        this.signUpnameSelector = page.locator("#name");
+        this.signUpemailSelector = page.locator("#email");
+        this.passwordSelector = page.locator("#password");
+        this.daySelector = page.locator("#days");
+        this.monthSelector = page.locator("#months");
+        this.yearSelector = page.locator("#years");
 
     }
 
@@ -61,11 +77,22 @@ export class RegiserPage{
         await this.signInSelector.click();
     }
 
-    // async assertAccountAndAddressLabel(expectedtext:string){
-    //     await this.helper.textAssertion(this.accountAndAddressInfoSelector,expectedtext)
-    // }
-
     async assertAccountAndAddressLabel(index: number, expectedText: string) {
         await expect(this.accountAndAddressInfoSelector.nth(index)).toHaveText(expectedText);
-      }
+    }
+
+
+    async fillAccountInformation(){
+        await this.titleSelector.click();
+        await expect(this.signUpnameSelector).toHaveValue('Bhim');
+        await expect(this.signUpemailSelector).toHaveValue('dreamypd73@gmail.com');
+        await this.passwordSelector.fill("Password1!");
+        await this.daySelector.selectOption({label:"1"});
+        await this.monthSelector.selectOption({label:"January"});
+        await this.yearSelector.selectOption({label:"2000"});
+    }
+
+
+
+
 }
