@@ -8,7 +8,8 @@ export function saveCredentials(email: string, password: string): void {
     if (!existsSync(dir)) {
         mkdirSync(dir, { recursive: true });
     }
-    const data = { email, password };
+    const timestamp = new Date().toISOString();
+    const data = { email, password, createdAt: timestamp };
     writeFileSync(filePath, JSON.stringify(data, null, 2)); //  Save as JSON with formatting
 }
 
