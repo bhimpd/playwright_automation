@@ -9,7 +9,7 @@ export function saveCredentials(email: string, password: string): void {
         mkdirSync(dir, { recursive: true });
     }
     const data = { email, password };
-    writeFileSync(filePath, JSON.stringify(data, null, 2)); // 👈 Save as JSON with formatting
+    writeFileSync(filePath, JSON.stringify(data, null, 2)); //  Save as JSON with formatting
 }
 
 export function getCredentials(): { email: string; password: string } {

@@ -28,7 +28,7 @@ test.skip("Should assert Text in Auth Page", async({page})=>{
     await page.waitForTimeout(5000);
 });
 
-test("Should fill the input,click Sign and Assert the text in Register Page", async({page})=>{
+test("Should fill the input,click Sign and Assert the text in Register Page and Register the User", async({page})=>{
     const helper = new Helper(page);
     const register = new RegiserPage(page);
 
@@ -43,20 +43,24 @@ test("Should fill the input,click Sign and Assert the text in Register Page", as
     register.clickSignIn();
     await helper.urlAssertion("https://automationexercise.com/signup");
     
-    await register.assertAccountAndAddressLabel(0,"Enter Account Information")
-    await register.assertAccountAndAddressLabel(1,"Address Information")
+    await register.assertAccountAndAddressLabel(0,"Enter Account Information");
+    await register.assertAccountAndAddressLabel(1,"Address Information");
 
     await register.fillAccountInformation(randomEmail,password);
     await page.waitForTimeout(3000);
     await register.fillAddressInformation();
 
     await helper.urlAssertion("https://automationexercise.com/account_created");
-    await register.accountCreatedLabelAssertion("Account Created!")
-    await register.continueButtonAssertionAndClick("Continue")
+    await register.accountCreatedLabelAssertion("Account Created!");
+    await register.continueButtonAssertionAndClick("Continue");
     
     await helper.urlAssertion("https://automationexercise.com");
-    await register.logoutAssertion("Logout","/logout")
-    await register.deleteAccountAssertion("Delete Account","/delete_account")
+    await register.logoutAssertion("Logout","/logout");
+    await register.deleteAccountAssertion("Delete Account","/delete_account");
+
+    await register.clickLogOutButton();
+    await helper.urlAssertion("https://automationexercise.com/login");
+    await register.loginSignInAssertion("Signup / Login", "/login")
 
     await page.waitForTimeout(5000);
 });

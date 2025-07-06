@@ -37,6 +37,7 @@ export class RegiserPage{
     readonly continueButtonSelector: Locator;
     readonly deleteAccountSelector: Locator;
     readonly logoutSelector: Locator;
+    readonly loginSignInSelector: Locator;
 
 
     constructor(page:Page){
@@ -79,6 +80,7 @@ export class RegiserPage{
 
         this.deleteAccountSelector = page.locator('a[href="/delete_account"]');
         this.logoutSelector = page.locator('a[href="/logout"]');
+        this.loginSignInSelector = page.locator('a[href="/login"]');
 
     }
 
@@ -167,6 +169,13 @@ export class RegiserPage{
         await this.helper.assertLinkWithTextAndHrefAssertion(this.deleteAccountSelector,expectedText,expectedHref);
     }
 
+    async clickLogOutButton(){
+        await this.logoutSelector.click();
+    }
+
+    async loginSignInAssertion(expectedText: string, expectedHref: string) {
+        await this.helper.assertLinkWithTextAndHrefAssertion(this.loginSignInSelector,expectedText,expectedHref);
+    }
 
 
 
