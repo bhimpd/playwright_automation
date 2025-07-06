@@ -58,10 +58,12 @@ test.describe.serial("Register and Login Flow", () => {
         await helper.urlAssertion("https://automationexercise.com");
         await register.logoutAssertion("Logout","/logout");
         await register.deleteAccountAssertion("Delete Account","/delete_account");
+        await register.loggedInAssertion();
 
         await register.clickLogOutButton();
         await helper.urlAssertion("https://automationexercise.com/login");
         await register.loginSignInAssertion("Signup / Login", "/login")
+        await register.loggeOutAssertion();
 
         await page.waitForTimeout(5000);
     });
@@ -81,6 +83,7 @@ test.describe.serial("Register and Login Flow", () => {
         await helper.urlAssertion("https://automationexercise.com");
         await register.logoutAssertion("Logout","/logout");
         await register.deleteAccountAssertion("Delete Account","/delete_account");
+        await register.loggedInAssertion();
 
         await page.waitForTimeout(3000);
     });

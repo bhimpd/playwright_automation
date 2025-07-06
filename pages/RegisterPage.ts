@@ -41,7 +41,8 @@ export class RegiserPage{
     readonly loginEmailAddressSelector: Locator;
     readonly loginPasswordSelector: Locator;
     readonly loginButtonSelector: Locator;
-
+    readonly faUserSelector: Locator;
+    readonly faUserNameSelector: Locator;
 
 
 
@@ -89,6 +90,8 @@ export class RegiserPage{
         this.loginEmailAddressSelector = page.locator('input[data-qa="login-email"]');
         this.loginPasswordSelector = page.locator('input[data-qa="login-password"]');
         this.loginButtonSelector = page.locator('button[data-qa="login-button"]');
+        this.faUserSelector = page.locator('li:has-text("Logged in as")');
+        this.faUserNameSelector = page.locator('.nav.navbar-nav li a b');
 
 
     }
@@ -190,6 +193,19 @@ export class RegiserPage{
         await this.loginEmailAddressSelector.fill(email);
         await this.loginPasswordSelector.fill(password);
         await this.loginButtonSelector.click();
+    }
+
+    async loggedInAssertion(){
+        await expect(this.faUserSelector).toBeVisible();
+        await expect(this.faUserSelector).toContainText("Logged in as");
+
+        await expect(this.faUserNameSelector).toBeVisible();
+        await expect(this.faUserNameSelector).toHaveText("Bhim");
+    }
+
+    async loggeOutAssertion(){
+        await expect(this.faUserSelector).toBeHidden();
+        await expect(this.faUserNameSelector).toBeHidden();
     }
     
 
