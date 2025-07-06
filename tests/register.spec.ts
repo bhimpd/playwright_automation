@@ -2,7 +2,7 @@ import { test,expect } from "@playwright/test";
 import { Helper } from "../helpers/helper";
 import { RegiserPage } from "../pages/RegisterPage";
 import { faker } from '@faker-js/faker';
-import { saveCredentials } from "../utilis/userData";
+import { saveCredentials, getCredentials} from "../utilis/userData";
 
 
 test.beforeEach("Login Page", async({page}) =>{
@@ -16,7 +16,7 @@ test.beforeEach("Login Page", async({page}) =>{
 });
 
 
-test.skip("Should assert Text in Auth Page", async({page})=>{
+test("Should assert Text in Auth Page", async({page})=>{
     const helper = new Helper(page);
     const register = new RegiserPage(page);
 
@@ -28,40 +28,61 @@ test.skip("Should assert Text in Auth Page", async({page})=>{
     await page.waitForTimeout(5000);
 });
 
-test("Should fill the input,click Sign and Assert the text in Register Page and Register the User", async({page})=>{
-    const helper = new Helper(page);
-    const register = new RegiserPage(page);
 
-    const randomEmail = `dreamypd73+${faker.string.alphanumeric(6)}@gmail.com`;
-    const password ="Password1!"
-    saveCredentials(randomEmail,password);
-    
-    await register.fillname("Bhim");
-    await register.fillemail(randomEmail);
-    await page.waitForTimeout(4000);
+test.describe.serial("Register and Login Flow", () => {
 
-    register.clickSignIn();
-    await helper.urlAssertion("https://automationexercise.com/signup");
-    
-    await register.assertAccountAndAddressLabel(0,"Enter Account Information");
-    await register.assertAccountAndAddressLabel(1,"Address Information");
+    test("Should fill the input,click Sign and Assert the text in Register Page and Register the User", async({page})=>{
+        const helper = new Helper(page);
+        const register = new RegiserPage(page);
 
-    await register.fillAccountInformation(randomEmail,password);
-    await page.waitForTimeout(3000);
-    await register.fillAddressInformation();
+        const randomEmail = `dreamypd73+${faker.string.alphanumeric(6)}@gmail.com`;
+        const password ="Password1!"
+        saveCredentials(randomEmail,password);
+        
+        await register.fillname("Bhim");
+        await register.fillemail(randomEmail);
 
-    await helper.urlAssertion("https://automationexercise.com/account_created");
-    await register.accountCreatedLabelAssertion("Account Created!");
-    await register.continueButtonAssertionAndClick("Continue");
-    
-    await helper.urlAssertion("https://automationexercise.com");
-    await register.logoutAssertion("Logout","/logout");
-    await register.deleteAccountAssertion("Delete Account","/delete_account");
+        register.clickSignIn();
+        await helper.urlAssertion("https://automationexercise.com/signup");
+        
+        await register.assertAccountAndAddressLabel(0,"Enter Account Information");
+        await register.assertAccountAndAddressLabel(1,"Address Information");
 
-    await register.clickLogOutButton();
-    await helper.urlAssertion("https://automationexercise.com/login");
-    await register.loginSignInAssertion("Signup / Login", "/login")
+        await register.fillAccountInformation(randomEmail,password);
+        await register.fillAddressInformation();
 
-    await page.waitForTimeout(5000);
+        await helper.urlAssertion("https://automationexercise.com/account_created");
+        await register.accountCreatedLabelAssertion("Account Created!");
+        await register.continueButtonAssertionAndClick("Continue");
+        
+        await helper.urlAssertion("https://automationexercise.com");
+        await register.logoutAssertion("Logout","/logout");
+        await register.deleteAccountAssertion("Delete Account","/delete_account");
+
+        await register.clickLogOutButton();
+        await helper.urlAssertion("https://automationexercise.com/login");
+        await register.loginSignInAssertion("Signup / Login", "/login")
+
+        await page.waitForTimeout(5000);
+    });
+
+    test("Login with saved credentials", async ({ page }) => {
+        const helper = new Helper(page);
+        const register = new RegiserPage(page);
+
+        const { email, password } = getCredentials(); // 👈 Read saved email & password
+
+        await helper.visitpage("https://automationexercise.com/");
+        await register.clickSignUp();
+        await helper.urlAssertion("https://automationexercise.com/login");
+
+        await register.login(email, password); 
+
+        await helper.urlAssertion("https://automationexercise.com");
+        await register.logoutAssertion("Logout","/logout");
+        await register.deleteAccountAssertion("Delete Account","/delete_account");
+
+        await page.waitForTimeout(3000);
+    });
+
 });
-

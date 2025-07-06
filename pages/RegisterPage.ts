@@ -38,6 +38,11 @@ export class RegiserPage{
     readonly deleteAccountSelector: Locator;
     readonly logoutSelector: Locator;
     readonly loginSignInSelector: Locator;
+    readonly loginEmailAddressSelector: Locator;
+    readonly loginPasswordSelector: Locator;
+    readonly loginButtonSelector: Locator;
+
+
 
 
     constructor(page:Page){
@@ -81,6 +86,10 @@ export class RegiserPage{
         this.deleteAccountSelector = page.locator('a[href="/delete_account"]');
         this.logoutSelector = page.locator('a[href="/logout"]');
         this.loginSignInSelector = page.locator('a[href="/login"]');
+        this.loginEmailAddressSelector = page.locator('input[data-qa="login-email"]');
+        this.loginPasswordSelector = page.locator('input[data-qa="login-password"]');
+        this.loginButtonSelector = page.locator('button[data-qa="login-button"]');
+
 
     }
 
@@ -177,6 +186,12 @@ export class RegiserPage{
         await this.helper.assertLinkWithTextAndHrefAssertion(this.loginSignInSelector,expectedText,expectedHref);
     }
 
+    async login(email: string, password: string) {
+        await this.loginEmailAddressSelector.fill(email);
+        await this.loginPasswordSelector.fill(password);
+        await this.loginButtonSelector.click();
+    }
+    
 
 
 }
