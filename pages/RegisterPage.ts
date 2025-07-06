@@ -119,13 +119,13 @@ export class RegiserPage{
     }
 
 
-    async fillAccountInformation(expectedemail:string){
+    async fillAccountInformation(expectedemail:string,expectedPassword: string){
         await this.titleSelector.click();
         console.log(`Using email: ${expectedemail}`);
 
         await expect(this.signUpnameSelector).toHaveValue('Bhim');
         await expect(this.signUpemailSelector).toHaveValue(expectedemail);
-        await this.passwordSelector.fill("Password1!");
+        await this.passwordSelector.fill(expectedPassword);
         await this.daySelector.selectOption({label:"1"});
         await this.monthSelector.selectOption({label:"January"});
         await this.yearSelector.selectOption({label:"2000"});
@@ -166,5 +166,8 @@ export class RegiserPage{
     async deleteAccountAssertion(expectedText: string, expectedHref: string) {
         await this.helper.assertLinkWithTextAndHrefAssertion(this.deleteAccountSelector,expectedText,expectedHref);
     }
+
+
+
 
 }

@@ -2,6 +2,7 @@ import { test,expect } from "@playwright/test";
 import { Helper } from "../helpers/helper";
 import { RegiserPage } from "../pages/RegisterPage";
 import { faker } from '@faker-js/faker';
+import { saveCredentials } from "../utilis/userData";
 
 
 test.beforeEach("Login Page", async({page}) =>{
@@ -15,7 +16,7 @@ test.beforeEach("Login Page", async({page}) =>{
 });
 
 
-test("Should assert Text in Auth Page", async({page})=>{
+test.skip("Should assert Text in Auth Page", async({page})=>{
     const helper = new Helper(page);
     const register = new RegiserPage(page);
 
@@ -27,11 +28,13 @@ test("Should assert Text in Auth Page", async({page})=>{
     await page.waitForTimeout(5000);
 });
 
-test.only("Should fill the input,click Sign and Assert the text in Register Page", async({page})=>{
+test("Should fill the input,click Sign and Assert the text in Register Page", async({page})=>{
     const helper = new Helper(page);
     const register = new RegiserPage(page);
 
     const randomEmail = `dreamypd73+${faker.string.alphanumeric(6)}@gmail.com`;
+    const password ="Password1!"
+    saveCredentials(randomEmail,password);
     
     await register.fillname("Bhim");
     await register.fillemail(randomEmail);
@@ -43,7 +46,7 @@ test.only("Should fill the input,click Sign and Assert the text in Register Page
     await register.assertAccountAndAddressLabel(0,"Enter Account Information")
     await register.assertAccountAndAddressLabel(1,"Address Information")
 
-    await register.fillAccountInformation(randomEmail);
+    await register.fillAccountInformation(randomEmail,password);
     await page.waitForTimeout(3000);
     await register.fillAddressInformation();
 
@@ -57,3 +60,4 @@ test.only("Should fill the input,click Sign and Assert the text in Register Page
 
     await page.waitForTimeout(5000);
 });
+
