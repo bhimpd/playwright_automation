@@ -18,6 +18,7 @@ test("test the test cases lists", async({page})=>{
     await helper.urlAssertion("https://automationexercise.com/test_cases");
     await testcase.assertTestCaseTitle("Test Cases");
 
+    await testcase.assertTestCasesLists();
 
     await page.waitForTimeout(5000);
 
