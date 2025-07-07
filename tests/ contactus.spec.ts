@@ -1,4 +1,4 @@
-import test from "@playwright/test"
+import test, { expect } from "@playwright/test"
 import { Helper } from "../helpers/helper";
 import { RegiserPage } from "../pages/RegisterPage";
 import { ContactUsPage } from "../pages/ContactUsPage";
@@ -28,7 +28,13 @@ test("Test the contact form", async({page}) =>{
     await contact.assertContactUsTitle("Contact Us");
     await contact.getInTouchAssertion("Get In Touch");
 
-    await contact.fillContact(testData);
+    await contact.fillContact(testData,"test-images/test.png");
+
+    await contact.assertDialogue();
+    await page.waitForTimeout(4000);
+
+    await contact.assertAndClickSubmitButton("Submit");
+    await contact.assertSuccessMessage("Success! Your details have been submitted successfully.")
 
     await page.waitForTimeout(5000);
 

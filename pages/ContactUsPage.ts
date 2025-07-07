@@ -13,6 +13,10 @@ export class ContactUsPage{
     readonly emailSelector: Locator;
     readonly subjectSelector: Locator;
     readonly messageSelector: Locator;
+    readonly imageUploaderSelector: Locator;
+    readonly submitButtonSelector: Locator;
+    readonly successMessageSelector: Locator;
+
 
     constructor(page:Page){
         this.page = page;
@@ -24,12 +28,11 @@ export class ContactUsPage{
         this.emailSelector = page.locator('input[data-qa="email"]');
         this.subjectSelector = page.locator('input[data-qa="subject"]');
         this.messageSelector = page.locator('textarea[data-qa="message"]');
-
-
-
+        this.imageUploaderSelector = page.locator('input[name="upload_file"]');
+        this.submitButtonSelector = page.locator('.submit_form');
+        this.successMessageSelector = page.locator('.status.alert.alert-success');
 
     }
-
 
 
     async loginSignInAssertion(expectedText: string, expectedHref: string) {
@@ -66,11 +69,35 @@ export class ContactUsPage{
         await this.messageSelector.fill(exptectedmessage)
     }
 
-    async fillContact(data: { name: string; email: string; subject: string; message: string }) {
+    async imageUpload(expectedFile:string){
+        await this.imageUploaderSelector.setInputFiles(expectedFile);
+    }
+
+    async fillContact(data: { name: string; email: string; subject: string; message: string }, filepath:string) {
         await this.fillName(data.name);
         await this.fillEmail(data.email);
         await this.fillSubject(data.subject);
         await this.fillMessage(data.message);
-
+        await this.imageUpload(filepath)  
     }
+
+    async assertAndClickSubmitButton(expectedText: string) {
+        await this.helper.textAssertion(this.submitButtonSelector, expectedText);
+        await this.submitButtonSelector.click();
+    }
+    
+
+    async assertDialogue(){
+        this.page.on('dialog', async(dialog) =>{
+            expect(dialog.type()).toContain("confirm");
+            expect (dialog.message()).toContain("Press OK to proceed!");
+            await dialog.accept();
+        })
+    }
+
+    async assertSuccessMessage(expectedText: string) {
+        await this.helper.textAssertion(this.successMessageSelector, expectedText);
+    }
+    
+
 }
