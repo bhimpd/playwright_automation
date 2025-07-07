@@ -98,3 +98,15 @@ test("Login with incorrect credentials", async({page})=>{
     await register.errorMessageAssertion("Your email or password is incorrect!")
 
 })
+
+
+test("Signup with already existing  credentials", async({page})=>{
+    const register = new RegiserPage(page)
+
+    await register.fillname("Bhim"); 
+    await register.fillemail("dreamypd73@gmail.com"); 
+    await register.clickSignIn();
+    await register.errorMessageAssertion("Email Address already exist!")
+
+})
+
