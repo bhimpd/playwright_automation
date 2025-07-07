@@ -24,6 +24,8 @@ test("Test the contact form", async({page}) =>{
     await contact.clickContactUs();
     await helper.urlAssertion("https://automationexercise.com/contact_us");
 
+    await contact.assertContactUsTitle("Contact Us");
+    await contact.getInTouchAssertion("Get In Touch");
 
     await page.waitForTimeout(5000);
 
