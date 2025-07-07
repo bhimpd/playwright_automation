@@ -89,3 +89,12 @@ test.describe.serial("Register and Login Flow", () => {
     });
 
 });
+
+
+test("Login with incorrect credentials", async({page})=>{
+    const register = new RegiserPage(page)
+
+    await register.login("dreamypd72@gmail.com", "Hello"); 
+    await register.errorMessageAssertion("Your email or password is incorrect!")
+
+})

@@ -43,6 +43,7 @@ export class RegiserPage{
     readonly loginButtonSelector: Locator;
     readonly faUserSelector: Locator;
     readonly faUserNameSelector: Locator;
+    readonly errorMsgSelector: Locator;
 
 
 
@@ -92,6 +93,7 @@ export class RegiserPage{
         this.loginButtonSelector = page.locator('button[data-qa="login-button"]');
         this.faUserSelector = page.locator('li:has-text("Logged in as")');
         this.faUserNameSelector = page.locator('.nav.navbar-nav li a b');
+        this.errorMsgSelector = page.locator('p[style="color: red;"]');
 
 
     }
@@ -206,6 +208,11 @@ export class RegiserPage{
     async loggeOutAssertion(){
         await expect(this.faUserSelector).toBeHidden();
         await expect(this.faUserNameSelector).toBeHidden();
+    }
+    
+    async errorMessageAssertion(expectedMsg:string){
+        await expect(this.errorMsgSelector).toBeVisible();
+        await expect(this.errorMsgSelector).toHaveText(expectedMsg)
     }
     
 
