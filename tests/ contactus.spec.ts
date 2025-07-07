@@ -2,7 +2,7 @@ import test from "@playwright/test"
 import { Helper } from "../helpers/helper";
 import { RegiserPage } from "../pages/RegisterPage";
 import { ContactUsPage } from "../pages/ContactUsPage";
-
+import { generateContactFormData } from "../helpers/faker"
 
 test.beforeEach("Login Page", async({page}) =>{
     const helper = new Helper(page);
@@ -19,6 +19,7 @@ test("Test the contact form", async({page}) =>{
 
     const contact = new ContactUsPage(page);
     const helper = new Helper(page);
+    const testData = generateContactFormData();
 
     await contact.loginSignInAssertion("Contact us","/contact_us");
     await contact.clickContactUs();
@@ -26,6 +27,8 @@ test("Test the contact form", async({page}) =>{
 
     await contact.assertContactUsTitle("Contact Us");
     await contact.getInTouchAssertion("Get In Touch");
+
+    await contact.fillContact(testData);
 
     await page.waitForTimeout(5000);
 
