@@ -14,6 +14,7 @@ export class TestCasesPage{
     readonly subscriptionSelector: Locator;
     readonly subscribeemailSelector: Locator;
     readonly subscribeSelector: Locator;
+    readonly subscriptionAlertSelector: Locator;
 
 
     constructor(page:Page){
@@ -25,6 +26,8 @@ export class TestCasesPage{
         this.subscriptionSelector = page.locator(".single-widget h2")
         this.subscribeemailSelector = page.locator("#susbscribe_email");
         this.subscribeSelector = page.locator("#subscribe");
+        this.subscriptionAlertSelector = page.locator("#success-subscribe .alert-success");
+
 
     }
 
@@ -68,6 +71,11 @@ export class TestCasesPage{
     async clickSubscribe(){
         await this.subscribeSelector.click();
     }
+
+    async subscriptionAlertAssertion(expectedText: string){
+        await this.helper.textAssertion(this.subscriptionAlertSelector, expectedText);
+    }
+
 
 
 

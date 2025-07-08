@@ -34,6 +34,8 @@ test.only("Check Subscription.", async({page})=>{
     await testcase.subscriptionAssertion("Subscription");
     await testcase.fillSubscribeemail("bhim.lamichhnae@intuji.com");
     await testcase.clickSubscribe();
+    
+    await testcase.subscriptionAlertAssertion("You have been successfully subscribed!")
 
     await page.waitForTimeout(5000);
 
