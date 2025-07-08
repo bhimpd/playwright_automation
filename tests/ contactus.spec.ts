@@ -1,6 +1,5 @@
 import test, { expect } from "@playwright/test"
 import { Helper } from "../helpers/helper";
-import { RegiserPage } from "../pages/RegisterPage";
 import { ContactUsPage } from "../pages/ContactUsPage";
 import { generateContactFormData } from "../helpers/faker"
 

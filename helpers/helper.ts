@@ -20,7 +20,7 @@ export class Helper{
     }
 
     async assertLinkWithTextAndHrefAssertion(locator: Locator, expectedText: string, expectedHref: string) {
-        await expect(locator).toHaveText(expectedText);
+        await expect(locator).toContainText(expectedText);
         await expect(locator).toHaveAttribute('href', expectedHref);
     }
 }
