@@ -16,7 +16,12 @@ test("Test the produdct src, price and name", async({page})=>{
 
     await product.assertProducts(" Products", "/products");
     await product.clickProductButton();
+    await helper.urlAssertion("https://automationexercise.com/products");
 
+    await product.allProductsLabelAssertion("All Products");
+    await product.assertProductInfo();
+
+    
     await page.waitForTimeout(5000);
 
 });
