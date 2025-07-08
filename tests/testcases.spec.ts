@@ -1,6 +1,7 @@
 import {test} from "@playwright/test"
 import { Helper } from "../helpers/helper";
 import { TestCasesPage } from "../pages/TestCasesPage";
+import { generateContactFormData } from "../helpers/faker"
 
 
 test.beforeEach("Login Page", async({page}) =>{
@@ -28,13 +29,15 @@ test("test the test cases lists", async({page})=>{
 test.only("Check Subscription.", async({page})=>{
     const testcase = new TestCasesPage(page);
     const helper = new Helper(page);
+    const testData = generateContactFormData();
 
     await testcase.scrollTo();
-
     await testcase.subscriptionAssertion("Subscription");
-    await testcase.fillSubscribeemail("bhim.lamichhnae@intuji.com");
+
+    console.log("email:: ",testData.email);
+    await testcase.fillSubscribeemail(testData.email);
     await testcase.clickSubscribe();
-    
+
     await testcase.subscriptionAlertAssertion("You have been successfully subscribed!")
 
     await page.waitForTimeout(5000);
