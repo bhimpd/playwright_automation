@@ -26,7 +26,7 @@ test("test the test cases lists", async({page})=>{
 
 });
 
-test.only("Check Subscription.", async({page})=>{
+test("Check Subscription.", async({page})=>{
     const testcase = new TestCasesPage(page);
     const helper = new Helper(page);
     const testData = generateContactFormData();

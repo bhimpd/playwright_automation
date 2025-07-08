@@ -1,0 +1,52 @@
+{
+    "products" : [
+        {"src":"/get_product_picture/1", "price":500, "name":"Blue Top"},
+        {"src":"/get_product_picture/2", "price":400, "name":"Men Tshirt"},
+        {"src":"/get_product_picture/3", "price":1000, "name":"Sleeveless Dress"},
+
+        {"src":"/get_product_picture/4", "price":1500, "name":"Stylish Dress"},
+        {"src":"/get_product_picture/5", "price":600, "name":"Winter Top"},
+        {"src":"/get_product_picture/6", "price":400, "name":"Summer White Top"},
+
+        {"src":"/get_product_picture/7", "price":1000, "name":"Madame Top For Women"},
+        {"src":"/get_product_picture/8", "price":700, "name":"Fancy Green Top"},
+        {"src":"/get_product_picture/9", "price":499, "name":"Sleeves Printed Top - White"},
+
+        {"src":"/get_product_picture/10", "price":359, "name":"Half Sleeves Top Schiffli Detailing - Pink"},
+        {"src":"/get_product_picture/11", "price":278, "name":"Frozen Tops For Kids"},
+        {"src":"/get_product_picture/12", "price":679, "name":"Full Sleeves Top Cherry - Pink"},
+
+        {"src":"/get_product_picture/13", "price":315, "name":"Printed Off Shoulder Top - White"},
+        {"src":"/get_product_picture/14", "price":478, "name":"Sleeves Top and Short - Blue & Pink"},
+        {"src":"/get_product_picture/15", "price":1200, "name":"Little Girls Mr. Panda Shirt"},
+
+        {"src":"/get_product_picture/16", "price":1050, "name":"Sleeveless Unicorn Patch Gown - Pink"},
+        {"src":"/get_product_picture/17", "price":1190, "name":"Cotton Mull Embroidered Dress"},
+        {"src":"/get_product_picture/18", "price":1530, "name":"Blue Cotton Indie Mickey Dress"},
+
+        {"src":"/get_product_picture/19", "price":1600, "name":"Long Maxi Tulle Fancy Dress Up Outfits -Pink"},
+        {"src":"/get_product_picture/20", "price":1100, "name":"Sleeveless Unicorn Print Fit & Flare Net Dress - Multi"},
+        {"src":"/get_product_picture/21", "price":849, "name":"Colour Blocked Shirt – Sky Blue"},
+
+        {"src":"/get_product_picture/22", "price":1299, "name":"Pure Cotton V-Neck T-Shirt"},
+        {"src":"/get_product_picture/23", "price":1000, "name":"Green Side Placket Detail T-Shirt"},
+        {"src":"/get_product_picture/24", "price":1500, "name":"Premium Polo T-Shirts"},
+
+        {"src":"/get_product_picture/25", "price":850, "name":"Pure Cotton Neon Green Tshirt"},
+        {"src":"/get_product_picture/26", "price":799, "name":"Soft Stretch Jeans"},
+        {"src":"/get_product_picture/27", "price":1200, "name":"Regular Fit Straight Jeans"},
+
+        {"src":"/get_product_picture/28", "price":1400, "name":"Grunt Blue Slim Fit Jeans"},
+        {"src":"/get_product_picture/29", "price":2300, "name":"Rose Pink Embroidered Maxi Dress"},
+        {"src":"/get_product_picture/30", "price":3000, "name":"Cotton Silk Hand Block Print Saree"},
+
+        {"src":"/get_product_picture/31", "price":3500, "name":"Rust Red Linen Saree"},
+        {"src":"/get_product_picture/32", "price":5000, "name":"Beautiful Peacock Blue Cotton Linen Saree"},
+        {"src":"/get_product_picture/33", "price":1400, "name":"Lace Top For Women"},
+
+        {"src":"/get_product_picture/34", "price":1389, "name":"GRAPHIC DESIGN MEN T SHIRT - BLUE"}
+
+
+
+    ]
+}
