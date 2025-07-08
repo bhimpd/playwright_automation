@@ -11,6 +11,9 @@ export class TestCasesPage{
     readonly testcaseSelector: Locator;
     readonly titleTestSelector: Locator;
     readonly eachTestCaseSelector: Locator;
+    readonly subscriptionSelector: Locator;
+    readonly subscribeemailSelector: Locator;
+    readonly subscribeSelector: Locator;
 
 
     constructor(page:Page){
@@ -19,6 +22,9 @@ export class TestCasesPage{
         this.testcaseSelector = page.locator(".header-middle a[href='/test_cases']");
         this.titleTestSelector = page.locator("h2.title");
         this.eachTestCaseSelector = page.locator("h4.panel-title a u");
+        this.subscriptionSelector = page.locator(".single-widget h2")
+        this.subscribeemailSelector = page.locator("#susbscribe_email");
+        this.subscribeSelector = page.locator("#subscribe");
 
     }
 
@@ -45,7 +51,23 @@ export class TestCasesPage{
         }
     }
 
-    
+    async scrollTo(){
+        await this.subscriptionSelector.scrollIntoViewIfNeeded();
+
+    }
+
+    async subscriptionAssertion(expectedText: string){
+        await this.helper.textAssertion(this.subscriptionSelector, expectedText);
+    }
+
+
+    async fillSubscribeemail(expectedmail:string){
+        await this.subscribeemailSelector.fill(expectedmail);
+    }
+
+    async clickSubscribe(){
+        await this.subscribeSelector.click();
+    }
 
 
 

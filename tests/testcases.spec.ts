@@ -9,6 +9,7 @@ test.beforeEach("Login Page", async({page}) =>{
     await helper.visitpage("https://automationexercise.com/");
 
 });
+
 test("test the test cases lists", async({page})=>{
     const testcase = new TestCasesPage(page);
     const helper = new Helper(page);
@@ -23,3 +24,17 @@ test("test the test cases lists", async({page})=>{
     await page.waitForTimeout(5000);
 
 });
+
+test.only("Check Subscription.", async({page})=>{
+    const testcase = new TestCasesPage(page);
+    const helper = new Helper(page);
+
+    await testcase.scrollTo();
+
+    await testcase.subscriptionAssertion("Subscription");
+    await testcase.fillSubscribeemail("bhim.lamichhnae@intuji.com");
+    await testcase.clickSubscribe();
+
+    await page.waitForTimeout(5000);
+
+})
