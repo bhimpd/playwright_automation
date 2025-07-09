@@ -22,6 +22,6 @@ test("Test the produdct src, price and name", async({page})=>{
     await product.assertProductInfo();
 
     
-    await page.waitForTimeout(5000);
+    // await page.waitForTimeout(5000);
 
 });

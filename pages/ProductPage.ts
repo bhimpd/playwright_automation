@@ -13,6 +13,7 @@ export class ProductPage{
     readonly imageSelector:Locator;
     readonly priceSelector:Locator;
     readonly nameSelector:Locator;
+    readonly viewProductButtonSelector: Locator;
 
 
 
@@ -24,6 +25,8 @@ export class ProductPage{
         this.imageSelector = page.locator('.single-products .productinfo img');
         this.priceSelector = page.locator('.single-products .productinfo h2');
         this.nameSelector = page.locator('.single-products .productinfo p');
+        this.viewProductButtonSelector = page.locator('.choose ul.nav.nav-pills');
+
 
 
     }
@@ -41,19 +44,38 @@ export class ProductPage{
     }
 
 
+    async clickViewProductButton(){
+        await this.viewProductButtonSelector.click();
+    }
+
+    async assertURLLink(){
+
+    }
+
+
     async assertProductInfo(){
+
         const expectedProducts = productInfo.products;
-    
-        for (let index = 0; index < expectedProducts.length; index++) {
+        const renderedProductCount = await this.viewProductButtonSelector.count();
+
+        for (let index = 0; index < renderedProductCount; index++) {
             const product = expectedProducts[index];
     
             const image = this.imageSelector.nth(index);
             const price = this.priceSelector.nth(index);
             const name = this.nameSelector.nth(index);
+            const viewProductLink = this.viewProductButtonSelector.nth(index);
+
     
             await expect(image).toHaveAttribute("src", product.src);
             await expect(price).toHaveText(`Rs. ${product.price}`);
             await expect(name).toHaveText(product.name);
+
+            await viewProductLink.click();
+
+            await expect(this.page).toHaveURL(`https://automationexercise.com${product.href}`);
+            await this.page.goBack({ waitUntil: 'domcontentloaded' });
+
         }
     }
     
