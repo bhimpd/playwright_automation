@@ -48,15 +48,13 @@ export class ProductPage{
         await this.viewProductButtonSelector.click();
     }
 
-    async assertURLLink(){
-
-    }
-
 
     async assertProductInfo(){
 
         const expectedProducts = productInfo.products;
         const renderedProductCount = await this.viewProductButtonSelector.count();
+
+        console.log("Number of Expected Products::: ",renderedProductCount);
 
         for (let index = 0; index < renderedProductCount; index++) {
             const product = expectedProducts[index];
