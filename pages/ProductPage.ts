@@ -14,6 +14,8 @@ export class ProductPage{
     readonly priceSelector:Locator;
     readonly nameSelector:Locator;
     readonly viewProductButtonSelector: Locator;
+    readonly searchInputSelector: Locator;
+    readonly submitSearchSelector: Locator;
 
 
 
@@ -26,8 +28,8 @@ export class ProductPage{
         this.priceSelector = page.locator('.single-products .productinfo h2');
         this.nameSelector = page.locator('.single-products .productinfo p');
         this.viewProductButtonSelector = page.locator('.choose ul.nav.nav-pills');
-
-
+        this.searchInputSelector = page.locator('#search_product');
+        this.submitSearchSelector = page.locator("#submit_search");
 
     }
 
@@ -76,6 +78,27 @@ export class ProductPage{
 
         }
     }
+
+
+    async searchProduct(){
+        const expectedProducts = productInfo.products;
+        const length = expectedProducts.length;
+
+        // Pick a random product
+        const randomIndex = Math.floor(Math.random() * length);
+        const product = expectedProducts[randomIndex];
+
+        // Fill the search input and click search
+        await this.searchInputSelector.fill(product.name);
+    }
+
+    async clickSearch(){
+        await this.submitSearchSelector.click();
+
+    }
+
+
+    
     
 
 

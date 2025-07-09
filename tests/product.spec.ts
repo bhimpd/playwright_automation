@@ -23,3 +23,21 @@ test("Test the produdct src, price and name", async({page})=>{
 
 
 });
+
+
+test.only("Search the product and assert ", async({page})=>{
+
+    const helper = new Helper(page);
+    const product = new ProductPage(page);
+
+    await product.assertProducts(" Products", "/products");
+    await product.clickProductButton();
+    await helper.urlAssertion("https://automationexercise.com/products");
+
+    await product.searchProduct();
+    await product.clickSearch();
+
+    await page.waitForTimeout(5000);
+
+
+});
