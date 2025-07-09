@@ -16,6 +16,8 @@ export class ProductPage{
     readonly viewProductButtonSelector: Locator;
     readonly searchInputSelector: Locator;
     readonly submitSearchSelector: Locator;
+    readonly sectionContainerSelector: Locator;
+
 
 
 
@@ -30,6 +32,7 @@ export class ProductPage{
         this.viewProductButtonSelector = page.locator('.choose ul.nav.nav-pills');
         this.searchInputSelector = page.locator('#search_product');
         this.submitSearchSelector = page.locator("#submit_search");
+        this.sectionContainerSelector = page.locator(".features_items");
 
     }
 
@@ -90,16 +93,27 @@ export class ProductPage{
 
         // Fill the search input and click search
         await this.searchInputSelector.fill(product.name);
+
+        return product;
+
     }
 
     async clickSearch(){
         await this.submitSearchSelector.click();
+    }
+
+    async scrollToSection(){
+        await this.sectionContainerSelector.scrollIntoViewIfNeeded();
 
     }
 
+    async assertSearchedProduct(searchedProduct:any){
 
-    
-    
+        console.log("Here Searched Product::: ",searchedProduct);
+        await expect(this.nameSelector).toHaveText(searchedProduct.name);
+        await expect(this.priceSelector).toHaveText(`Rs. ${searchedProduct.price}`);
+        await expect(this.imageSelector).toHaveAttribute("src", searchedProduct.src);
 
+    }
 
 }

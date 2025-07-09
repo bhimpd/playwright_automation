@@ -34,10 +34,17 @@ test.only("Search the product and assert ", async({page})=>{
     await product.clickProductButton();
     await helper.urlAssertion("https://automationexercise.com/products");
 
-    await product.searchProduct();
+    const searchedProduct =  await product.searchProduct();
     await product.clickSearch();
 
-    await page.waitForTimeout(5000);
+    console.log("Searched Product :: ", searchedProduct);
+
+    await product.scrollToSection();
+    await page.waitForTimeout(2000);
+
+    await product.assertSearchedProduct(searchedProduct);
+
+    // await page.waitForTimeout(5000);
 
 
 });
