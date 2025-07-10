@@ -4,7 +4,7 @@ pipeline {
 
    triggers {
        githubPush()
-   }
+    }
 
 
    stages {
@@ -13,21 +13,20 @@ pipeline {
            steps {
                git branch: 'main',
                url: 'https://github.com/bhimpd/playwright_automation'
-           }
+            }
        }
 
        stage('Install Dependencies') {
            steps {
                echo 'Installing dependencies...'
                sh 'npm install'
-           }
+            }
        }
 
        stage('Run Tests') {
            steps {
                echo 'Running Playwright  tests...'
-               sh """
-                   npx playwright test  """
+               sh """npx playwright test"""
            }
        }
 
@@ -53,9 +52,10 @@ pipeline {
         }
    }
 
-   post {
+
+
+    post {
         always {
-            sh 'npx playwright show-report --viewer || true'
             archiveArtifacts artifacts: 'playwright-report/**/*', allowEmptyArchive: true
             junit 'test-results/**/*.xml'
         }
@@ -66,7 +66,6 @@ pipeline {
             echo '✅ Build Passed!'
         }
     }
-
 
 }
 
