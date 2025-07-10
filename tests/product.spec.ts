@@ -25,7 +25,7 @@ test("Test the produdct src, price and name", async({page})=>{
 });
 
 
-test.only("Search the product and assert ", async({page})=>{
+test("Search the product and assert ", async({page})=>{
 
     const helper = new Helper(page);
     const product = new ProductPage(page);

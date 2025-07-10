@@ -55,18 +55,20 @@ pipeline {
 
 
 
-    post {
-        always {
-            archiveArtifacts artifacts: 'playwright-report/**/*', allowEmptyArchive: true
-            junit 'test-results/**/*.xml'
-        }
-        failure {
-            echo '❌ Build Failed!'
-        }
-        success {
-            echo '✅ Build Passed!'
-        }
+   post {
+    always {
+        sh 'npx playwright show-report --viewer || true'
+        archiveArtifacts artifacts: 'playwright-report/**/*', allowEmptyArchive: true
+        junit 'test-results/**/*.xml'
     }
+    failure {
+        echo '❌ Build Failed!'
+    }
+    success {
+        echo '✅ Build Passed!'
+    }
+}
+
 
 }
 
