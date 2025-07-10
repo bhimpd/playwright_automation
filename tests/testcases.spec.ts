@@ -53,14 +53,12 @@ test.only("Check Subscription in Cart page", async({page})=>{
     await testcase.viewCartAssertion("Cart","/view_cart");
     await testcase.clickViewCart();
     await helper.urlAssertion("https://automationexercise.com/view_cart");
+   
+    await testcase.subscriptionAssertion("Subscription"); 
+    await testcase.fillSubscribeemail(testData.email);
+    await testcase.clickSubscribe();
 
-    // await testcase.subscriptionAssertion("Subscription");
-
-    // console.log("email:: ",testData.email);
-    // await testcase.fillSubscribeemail(testData.email);
-    // await testcase.clickSubscribe();
-
-    // await testcase.subscriptionAlertAssertion("You have been successfully subscribed!")
+    await testcase.subscriptionAlertAssertion("You have been successfully subscribed!")
 
     await page.waitForTimeout(5000);
 
