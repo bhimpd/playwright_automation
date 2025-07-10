@@ -58,7 +58,7 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: 'playwright-report/**/*', allowEmptyArchive: true
-            junit 'test-results/**/*.xml'
+             junit 'test-results/results.xml'
         }
         failure {
             echo '❌ Build Failed!'
