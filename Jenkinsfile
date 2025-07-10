@@ -3,7 +3,7 @@ pipeline {
    agent any
 
    tools {
-        nodejs 'Node18' // Must match the name in Global Tool Configuration
+        nodejs 'Node 18' // Must match the name in Global Tool Configuration
     }
 
    triggers {
