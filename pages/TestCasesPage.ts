@@ -81,6 +81,10 @@ export class TestCasesPage{
     }
 
 
+    async clickViewCart(){
+        await this.viewcartSelector.click();
+    }
+
     async viewCartAssertion(expectedText: string, expectedHref: string) {
         await this.helper.assertLinkWithTextAndHrefAssertion(this.viewcartSelector,expectedText,expectedHref);
     }

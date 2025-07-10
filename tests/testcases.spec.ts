@@ -51,6 +51,8 @@ test.only("Check Subscription in Cart page", async({page})=>{
     const testData = generateContactFormData();
 
     await testcase.viewCartAssertion("Cart","/view_cart");
+    await testcase.clickViewCart();
+    await helper.urlAssertion("https://automationexercise.com/view_cart");
 
     // await testcase.subscriptionAssertion("Subscription");
 
