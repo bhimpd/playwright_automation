@@ -37,7 +37,7 @@ test.only("Search the product and assert ", async({page})=>{
     const searchedProduct =  await product.searchProduct();
     await product.clickSearch();
 
-    console.log("Searched Product :: ", searchedProduct);
+    // console.log("Searched Product :: ", searchedProduct);
 
     await product.scrollToSection();
     await page.waitForTimeout(2000);
