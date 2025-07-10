@@ -1,0 +1,22 @@
+{
+    "categories": [
+      {
+        "name": "Men",
+        "subcategories": ["T-Shirt", "Jeans"]
+      },
+      {
+        "name": "Women",
+        "subcategories": ["Top", "Dress", "Sari"]
+      },
+      {
+        "name": "Kids",
+        "subcategories": ["Dress", "Tops & Shirts"]
+      }
+    ],
+
+    
+    "brands": [
+        "Polo","H&M","Madame","Mast & Harbour","Babyhug","Allen Solly Junior","Kookie Kids","Biba"
+    ]
+  }
+  
