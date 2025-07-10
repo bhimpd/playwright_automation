@@ -53,21 +53,19 @@ pipeline {
         }
    }
 
-
-
    post {
-    always {
-        sh 'npx playwright show-report --viewer || true'
-        archiveArtifacts artifacts: 'playwright-report/**/*', allowEmptyArchive: true
-        junit 'test-results/**/*.xml'
+        always {
+            sh 'npx playwright show-report --viewer || true'
+            archiveArtifacts artifacts: 'playwright-report/**/*', allowEmptyArchive: true
+            junit 'test-results/**/*.xml'
+        }
+        failure {
+            echo '❌ Build Failed!'
+        }
+        success {
+            echo '✅ Build Passed!'
+        }
     }
-    failure {
-        echo '❌ Build Failed!'
-    }
-    success {
-        echo '✅ Build Passed!'
-    }
-}
 
 
 }
