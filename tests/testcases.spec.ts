@@ -45,7 +45,7 @@ test("Check Subscription.", async({page})=>{
 })
 
 
-test.only("Check Subscription in Cart page", async({page})=>{
+test("Check Subscription in Cart page", async({page})=>{
     const testcase = new TestCasesPage(page);
     const helper = new Helper(page);
     const testData = generateContactFormData();
