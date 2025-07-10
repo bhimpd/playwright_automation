@@ -20,6 +20,7 @@ pipeline {
            steps {
                echo 'Installing dependencies...'
                sh 'npm install'
+               sh 'npm install playwright'
             }
        }
 
