@@ -43,3 +43,23 @@ test("Check Subscription.", async({page})=>{
     await page.waitForTimeout(5000);
 
 })
+
+
+test.only("Check Subscription in Cart page", async({page})=>{
+    const testcase = new TestCasesPage(page);
+    const helper = new Helper(page);
+    const testData = generateContactFormData();
+
+    await testcase.viewCartAssertion("Cart","/view_cart");
+
+    // await testcase.subscriptionAssertion("Subscription");
+
+    // console.log("email:: ",testData.email);
+    // await testcase.fillSubscribeemail(testData.email);
+    // await testcase.clickSubscribe();
+
+    // await testcase.subscriptionAlertAssertion("You have been successfully subscribed!")
+
+    await page.waitForTimeout(5000);
+
+})

@@ -15,12 +15,16 @@ export class TestCasesPage{
     readonly subscribeemailSelector: Locator;
     readonly subscribeSelector: Locator;
     readonly subscriptionAlertSelector: Locator;
+    readonly viewcartSelector: Locator;
+
 
 
     constructor(page:Page){
         this.page = page;
         this.helper = new Helper(page);
         this.testcaseSelector = page.locator(".header-middle a[href='/test_cases']");
+        this.viewcartSelector = page.locator(".header-middle a[href='/view_cart']");
+
         this.titleTestSelector = page.locator("h2.title");
         this.eachTestCaseSelector = page.locator("h4.panel-title a u");
         this.subscriptionSelector = page.locator(".single-widget h2")
@@ -77,6 +81,9 @@ export class TestCasesPage{
     }
 
 
+    async viewCartAssertion(expectedText: string, expectedHref: string) {
+        await this.helper.assertLinkWithTextAndHrefAssertion(this.viewcartSelector,expectedText,expectedHref);
+    }
 
 
 }
