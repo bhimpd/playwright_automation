@@ -2,6 +2,10 @@ pipeline {
 
    agent any
 
+   tools {
+        nodejs 'Node18' // Must match the name in Global Tool Configuration
+    }
+
    triggers {
        githubPush()
     }
