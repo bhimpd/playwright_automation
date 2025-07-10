@@ -37,14 +37,14 @@ test.only("Search the product and assert ", async({page})=>{
     const searchedProduct =  await product.searchProduct();
     await product.clickSearch();
 
-    console.log("Searched Product :: ", searchedProduct);
+    // console.log("Searched Product :: ", searchedProduct);
 
     await product.scrollToSection();
     await page.waitForTimeout(2000);
 
     await product.assertSearchedProduct(searchedProduct);
 
-    // await page.waitForTimeout(5000);
+    await page.waitForTimeout(5000);
 
 
 });
