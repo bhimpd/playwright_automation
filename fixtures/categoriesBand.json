@@ -12,6 +12,9 @@
         "name": "Kids",
         "subcategories": ["Dress", "Tops & Shirts"]
       }
+    ],
+    "brands" : [
+      "Polo","H&M"
     ]
   }
   
