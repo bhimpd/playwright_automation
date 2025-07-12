@@ -3,7 +3,7 @@ import { Helper } from "../helpers/helper";
 import { ProductPage } from "../pages/ProductPage";
 
 
-test.beforeEach("Login Page", async({page}) =>{
+test.beforeEach( async({page}) =>{
     
     const helper = new Helper(page);
     await helper.visitpage("https://automationexercise.com/");

@@ -5,7 +5,7 @@ import { faker } from '@faker-js/faker';
 import { saveCredentials, getCredentials} from "../utilis/userData";
 
 
-test.beforeEach("Login Page", async({page}) =>{
+test.beforeEach(async({page}) =>{
     const helper = new Helper(page);
     const register = new RegiserPage(page);
 
