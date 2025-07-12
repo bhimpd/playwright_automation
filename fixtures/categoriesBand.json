@@ -14,7 +14,17 @@
       }
     ],
     "brands" : [
-      "Polo","H&M","Madame","Mast & Harbour","Babyhug","Allen Solly Junior","Kookie Kids","Biba"
+
+      {
+        "name": "Polo",
+        "href": "/brand_products/Polo",
+        "quantity" : "6"
+      },
+      {
+        "name": "H&M",
+        "href": "/brand_products/H&M",
+        "quantity" : "5"
+      }
     ]
   }
   

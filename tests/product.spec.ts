@@ -62,4 +62,7 @@ test("Assert the Category Names", async({page})=>{
     await product.assertProductInfo();
 
 
+    // "Polo","H&M","Madame","Mast & Harbour","Babyhug","Allen Solly Junior","Kookie Kids","Biba"
+
+
 });
