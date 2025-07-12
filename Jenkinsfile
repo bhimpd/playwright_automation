@@ -33,7 +33,7 @@ pipeline {
 
        stage('Run Tests') {
            steps {
-               echo 'Running Playwright  tests...'
+               echo 'Running Playwright  tests......'
                sh """npx playwright test --project=chromium"""
            }
        }
