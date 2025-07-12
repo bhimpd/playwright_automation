@@ -3,8 +3,9 @@ pipeline {
    agent any
 
    tools {
-        nodejs 'Node 18' // Must match the name in Global Tool Configuration
+        nodejs 'Node 24' // Must match the name in Global Tool Configuration
     }
+
 
    triggers {
        githubPush()
@@ -20,13 +21,15 @@ pipeline {
             }
        }
 
-       stage('Install Dependencies') {
-           steps {
-               echo 'Installing dependencies...'
-               sh 'npm install'
-               sh 'npm install playwright'
+     stage('Install Dependencies') {
+            steps {
+                echo 'Installing dependencies...'
+                sh 'node -v'
+                sh 'npm -v'
+                sh 'npm install'
+                sh 'npm install playwright'
             }
-       }
+        }
 
        stage('Run Tests') {
            steps {
