@@ -21,10 +21,7 @@ export class ProductPage{
     readonly categoryLabelSelector: Locator;
     readonly footerSectionSelector: Locator;
     readonly parentCategoryLabelSelector: Locator;
-
-
-
-
+    readonly subCategoryLabelSelector: Locator;
 
     constructor(page:Page){
         this.page = page;
@@ -41,7 +38,7 @@ export class ProductPage{
         this.categoryLabelSelector = page.locator(".left-sidebar h2").first();
         this.footerSectionSelector = page.locator("#footer");
         this.parentCategoryLabelSelector = page.locator(".panel-heading a");
-
+        this.subCategoryLabelSelector = page.locator(".panel-body ul li a");
 
     }
 
@@ -135,14 +132,14 @@ export class ProductPage{
     }
 
     async parentCategoryLabelAssertion(){
-        const parentCategories = categoryAndBrand.categories;
-        console.log("Parent Category Lists :: ",parentCategories);
+        const categories = categoryAndBrand.categories;
+        console.log("Categories Lists :: ",categories);
 
-        const parentCategoryLength = parentCategories.length;
+        const parentCategoryLength = categories.length;
         console.log("Total category : ",parentCategoryLength);
 
         for(let  i = 0; i < parentCategoryLength; i++){
-            const parentCategory = parentCategories[i];
+            const parentCategory = categories[i];
 
             const parentCategoryName = this.parentCategoryLabelSelector.nth(i);
 
@@ -152,5 +149,44 @@ export class ProductPage{
         }
     }
 
+
+    async subCategoryNameAndLinkAssertion() {
+        const categories = categoryAndBrand.categories;
+    
+        const parentCategories = this.parentCategoryLabelSelector;
+    
+        const parentCount = await parentCategories.count();
+    
+        for (let i = 0; i < parentCount; i++) {
+            const parentCategory = categories[i];
+    
+            // Click to expand the current parent category
+            const parentCategoryLink = parentCategories.nth(i);
+            await parentCategoryLink.click();
+    
+            // Wait for the subcategory section to expand (based on its ID from href="#Women" etc.)
+            const href = await parentCategoryLink.getAttribute("href"); // e.g., "#Women"
+            if (!href) continue;
+    
+            const panelId = href.replace("#", ""); // e.g., "Women"
+            const subcategorySection = this.page.locator(`#${panelId}.panel-collapse`);
+    
+            await expect(subcategorySection).toHaveClass(/in|show/); // Wait until expanded
+    
+            // Locate only subcategories inside this expanded section
+            const subCategoriesLocator = subcategorySection.locator("ul li a");
+            const subcategoriesFromJson = parentCategory.subcategories;
+    
+            for (let j = 0; j < subcategoriesFromJson.length; j++) {
+                const expectedSubCategory = subcategoriesFromJson[j];
+                const subCategoryElement = subCategoriesLocator.nth(j);
+    
+                await expect(subCategoryElement).toHaveText(expectedSubCategory.name, { timeout: 5000 });
+                const actualHref = await subCategoryElement.getAttribute('href');
+                expect(actualHref).toBe(expectedSubCategory.href);
+            }
+        }
+    }
+    
 
 }

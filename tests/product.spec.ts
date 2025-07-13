@@ -50,7 +50,7 @@ test("Search the product and assert ", async({page})=>{
 });
 
 
-test.only("Assert the Category Names", async({page})=>{
+test("Assert the Category Names", async({page})=>{
     const helper = new Helper(page);
     const product = new ProductPage(page);
 
@@ -64,5 +64,24 @@ test.only("Assert the Category Names", async({page})=>{
     await product.parentCategoryLabelAssertion();
 
     await page.waitForTimeout(5000);
+
+});
+
+
+test.only("Assert the Sub Category Names and Links", async({page})=>{
+    const helper = new Helper(page);
+    const product = new ProductPage(page);
+
+    await product.assertProducts(" Products", "/products");
+    await product.clickProductButton();
+    await helper.urlAssertion("https://automationexercise.com/products");
+    await product.scrollToCategory();
+
+    await product.allProductsLabelAssertion("All Products");
+    await product.categoryLabelAssertion("Category");
+
+    await product.subCategoryNameAndLinkAssertion();
+
+    // await page.waitForTimeout(5000);
 
 });
