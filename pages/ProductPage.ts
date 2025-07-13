@@ -22,6 +22,9 @@ export class ProductPage{
     readonly footerSectionSelector: Locator;
     readonly parentCategoryLabelSelector: Locator;
     readonly subCategoryLabelSelector: Locator;
+    readonly brandLabelSelector: Locator;
+    readonly brandQuantitySelector: Locator;
+
 
     constructor(page:Page){
         this.page = page;
@@ -39,6 +42,10 @@ export class ProductPage{
         this.footerSectionSelector = page.locator("#footer");
         this.parentCategoryLabelSelector = page.locator(".panel-heading a");
         this.subCategoryLabelSelector = page.locator(".panel-body ul li a");
+        this.brandLabelSelector = page.locator(".brands-name ul li a");
+        this.brandQuantitySelector = page.locator(".brands-name ul li a .pull-right");
+
+
 
     }
 
@@ -181,12 +188,31 @@ export class ProductPage{
                 const expectedSubCategory = subcategoriesFromJson[j];
                 const subCategoryElement = subCategoriesLocator.nth(j);
     
-                await expect(subCategoryElement).toHaveText(expectedSubCategory.name, { timeout: 5000 });
+                await expect(subCategoryElement).toHaveText(expectedSubCategory.name);
                 const actualHref = await subCategoryElement.getAttribute('href');
                 expect(actualHref).toBe(expectedSubCategory.href);
             }
         }
     }
     
+
+    async branNameQuantityHrefAssertion(){
+        const brands = categoryAndBrand.brands;
+
+        const length =  brands.length;
+
+        for(let i=0; i<length; i++){
+            const brand =brands[i];
+            const brandName =  this.brandLabelSelector.nth(i);
+            await expect(brandName).toContainText(brand.name);
+           
+            const brandQuantity = this.brandQuantitySelector.nth(i);
+            await expect(brandQuantity).toContainText(brand.quantity);
+
+            const brandHref = await this.brandLabelSelector.nth(i).getAttribute("href");
+            expect(brandHref).toBe(brand.href);
+            // await this.page.waitForTimeout(2000);
+        }
+    }
 
 }

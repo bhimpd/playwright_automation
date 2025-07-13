@@ -56,6 +56,36 @@
         "name": "H&M",
         "href": "/brand_products/H&M",
         "quantity" : "5"
+      },
+      {
+        "name": "Madame",
+        "href": "/brand_products/Madame",
+        "quantity" : "5"
+      },
+      {
+        "name": "Mast & Harbour",
+        "href": "/brand_products/Mast & Harbour",
+        "quantity" : "3"
+      },
+      {
+        "name": "Babyhug",
+        "href": "/brand_products/Babyhug",
+        "quantity" : "4"
+      },
+      {
+        "name": "Allen Solly Junior",
+        "href": "/brand_products/Allen Solly Junior",
+        "quantity" : "3"
+      },
+      {
+        "name": "Kookie Kids",
+        "href": "/brand_products/Kookie Kids",
+        "quantity" : "3"
+      },
+      {
+        "name": "Biba",
+        "href": "/brand_products/Biba",
+        "quantity" : "5"
       }
     ]
   }
