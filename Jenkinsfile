@@ -26,6 +26,7 @@ pipeline {
                 echo 'Installing dependencies...'
                 sh 'node -v'
                 sh 'npm -v'
+                sh npm init playwright@latest
                 sh 'npm list @playwright/test --all'
                 sh 'npm install'
                 sh 'npm install playwright'
