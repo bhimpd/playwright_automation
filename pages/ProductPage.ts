@@ -1,6 +1,7 @@
 import { Page, expect, Locator } from "@playwright/test"
 import { Helper } from "../helpers/helper";
 import productInfo from "../fixtures/productDetails.json";
+import categoryAndBrand from "../fixtures/categoriesBand.json"
 
 
 export class ProductPage{
@@ -17,6 +18,10 @@ export class ProductPage{
     readonly searchInputSelector: Locator;
     readonly submitSearchSelector: Locator;
     readonly sectionContainerSelector: Locator;
+    readonly categoryLabelSelector: Locator;
+    readonly footerSectionSelector: Locator;
+    readonly parentCategoryLabelSelector: Locator;
+
 
 
 
@@ -33,6 +38,10 @@ export class ProductPage{
         this.searchInputSelector = page.locator('#search_product');
         this.submitSearchSelector = page.locator("#submit_search");
         this.sectionContainerSelector = page.locator(".features_items");
+        this.categoryLabelSelector = page.locator(".left-sidebar h2").first();
+        this.footerSectionSelector = page.locator("#footer");
+        this.parentCategoryLabelSelector = page.locator(".panel-heading a");
+
 
     }
 
@@ -115,5 +124,33 @@ export class ProductPage{
         await expect(this.imageSelector).toHaveAttribute("src", searchedProduct.src);
 
     }
+
+    async categoryLabelAssertion(expectedText:string){
+        await expect(this.categoryLabelSelector).toHaveText(expectedText);
+    }
+
+    async scrollToCategory(){
+        await this.categoryLabelSelector.scrollIntoViewIfNeeded();
+
+    }
+
+    async parentCategoryLabelAssertion(){
+        const parentCategories = categoryAndBrand.categories;
+        console.log("Parent Category Lists :: ",parentCategories);
+
+        const parentCategoryLength = parentCategories.length;
+        console.log("Total category : ",parentCategoryLength);
+
+        for(let  i = 0; i < parentCategoryLength; i++){
+            const parentCategory = parentCategories[i];
+
+            const parentCategoryName = this.parentCategoryLabelSelector.nth(i);
+
+            await expect(parentCategoryName).toHaveText(parentCategory.name);
+            console.log("Parent Category Index N Name::: ",parentCategoryName ," ::",parentCategory.name)
+
+        }
+    }
+
 
 }

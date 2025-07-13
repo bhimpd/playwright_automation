@@ -50,19 +50,19 @@ test("Search the product and assert ", async({page})=>{
 });
 
 
-test("Assert the Category Names", async({page})=>{
+test.only("Assert the Category Names", async({page})=>{
     const helper = new Helper(page);
     const product = new ProductPage(page);
 
     await product.assertProducts(" Products", "/products");
     await product.clickProductButton();
     await helper.urlAssertion("https://automationexercise.com/products");
+    await product.scrollToCategory();
 
     await product.allProductsLabelAssertion("All Products");
-    await product.assertProductInfo();
+    await product.categoryLabelAssertion("Category");
+    await product.parentCategoryLabelAssertion();
 
-
-    // "Polo","H&M","Madame","Mast & Harbour","Babyhug","Allen Solly Junior","Kookie Kids","Biba"
-
+    await page.waitForTimeout(5000);
 
 });

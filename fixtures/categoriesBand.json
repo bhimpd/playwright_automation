@@ -1,20 +1,20 @@
 {
     "categories": [
       {
-        "name": "Men",
-        "subcategories": ["T-Shirt", "Jeans"]
+        "name": "Women",
+        "subcategories": ["Dress", "Tops", "Saree"]
       },
       {
-        "name": "Women",
-        "subcategories": ["Top", "Dress", "Sari"]
+        "name": "Men",
+        "subcategories": ["T-Shirt", "Jeans"]
       },
       {
         "name": "Kids",
         "subcategories": ["Dress", "Tops & Shirts"]
       }
     ],
-    "brands" : [
 
+    "brands" : [
       {
         "name": "Polo",
         "href": "/brand_products/Polo",
