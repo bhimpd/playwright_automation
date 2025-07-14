@@ -120,6 +120,10 @@ test.only("Add the Product to the cart", async({page})=>{
 
     await product.assertTableHeaders();
 
+    console.log("Product 1::",product1);
+    console.log("Product 2::",product2);
+
+
     await page.waitForTimeout(5000);
 
 });

@@ -259,10 +259,12 @@ export class ProductPage{
         } else {
             await this.clickContinueShopping();
         }
+
     
         console.log(`✅ Added random product at index ${randomIndex} to cart`);
         console.log("NAME :::", name);
         console.log("PRICE :::", price);
+        return { name, price };
     }
     
 
