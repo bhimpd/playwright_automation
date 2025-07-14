@@ -116,12 +116,15 @@ test.only("Add the Product to the cart", async({page})=>{
     let product1 = await product.addProductToCart();
     let product2 =  await product.addProductToCart(true);;
 
+    console.log("Product 1::",product1);
+    console.log("Product 2::",product2);
+
     await helper.urlAssertion("https://automationexercise.com/view_cart");
 
     await product.assertTableHeaders();
 
-    console.log("Product 1::",product1);
-    console.log("Product 2::",product2);
+    await product.assertCartItems([product1, product2]);
+
 
 
     await page.waitForTimeout(5000);

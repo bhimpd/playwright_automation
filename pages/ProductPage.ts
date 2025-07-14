@@ -231,7 +231,7 @@ export class ProductPage{
     }
 
 
-    async addProductToCart(clickViewCartInsteadOfContinue: boolean = false) {
+    async addProductToCart(clickViewCartInsteadOfContinue: boolean = false):Promise<any> {
         const count = await this.productWrapperSelector.count();
         const randomIndex = Math.floor(Math.random() * count);
     
@@ -310,6 +310,36 @@ export class ProductPage{
         }
     }
     
-
+    async assertCartItems(expectedItems: { name: string; price: string }[]) {
+        const rows = this.page.locator('tbody tr');
+    
+        const count = await rows.count();
+        expect(count).toBe(expectedItems.length);
+    
+        for (let i = 0; i < count; i++) {
+            const row = rows.nth(i);
+    
+            const name = await row.locator('.cart_description h4 a').textContent();
+            const price = await row.locator('.cart_price p').textContent();
+            const quantity = await row.locator('.cart_quantity button').textContent();
+            const total = await row.locator('.cart_total_price').textContent();
+    
+            const expected = expectedItems[i];
+    
+            // Clean up whitespace just in case
+            expect(name?.trim()).toBe(expected.name?.trim());
+            expect(price?.trim()).toBe(expected.price?.trim());
+    
+            // Optional: Parse quantity & total into numbers for deeper validation
+            const priceNum = parseInt(price!.replace(/[^\d]/g, ""));
+            const quantityNum = parseInt(quantity!);
+            const totalNum = parseInt(total!.replace(/[^\d]/g, ""));
+    
+            expect(totalNum).toBe(priceNum * quantityNum);
+    
+            console.log(`✅ Cart item ${i + 1} validated: ${name}, ${price}, Qty: ${quantity}, Total: ${total}`);
+        }
+    }
+    
 
 }
