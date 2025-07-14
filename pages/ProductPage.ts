@@ -1,7 +1,9 @@
 import { Page, expect, Locator } from "@playwright/test"
 import { Helper } from "../helpers/helper";
 import productInfo from "../fixtures/productDetails.json";
-import categoryAndBrand from "../fixtures/categoriesBand.json"
+import categoryAndBrand from "../fixtures/categoriesBand.json";
+import table from "../fixtures/tableHeadColum.json";
+
 
 
 export class ProductPage{
@@ -29,8 +31,7 @@ export class ProductPage{
     readonly viewCartSelector: Locator;
     readonly modalAddedLabelSelector: Locator;
     readonly modalBodyLabelSelector: Locator;
-
-
+    readonly tableHeadersColumnsSelectors: Locator;
 
 
     constructor(page:Page){
@@ -56,8 +57,10 @@ export class ProductPage{
         this.viewCartSelector = page.locator('a[href="/view_cart"] u');
         this.modalAddedLabelSelector = page.locator('.modal-header h4.modal-title.w-100');
         this.modalBodyLabelSelector = page.locator('.modal-body p.text-center');
+        this.tableHeadersColumnsSelectors = page.locator('thead tr.cart_menu td');
 
 
+        
 
     }
 
@@ -267,11 +270,11 @@ export class ProductPage{
         await expect(this.modalAddedLabelSelector).toHaveText(expectedText);
     }
 
+
     async assertModalBodyLabel(expectedText: string) {
         await expect(this.modalBodyLabelSelector.filter({ hasText: expectedText })).toHaveText(expectedText);
     }
     
-
 
     async assertContinueShoppingLabel(expectedText:string){
         await expect(this.classModalSelector).toHaveText(expectedText);
@@ -291,6 +294,20 @@ export class ProductPage{
     }
 
 
+    async assertTableHeaders() {
+        const expectedHeaders = table.tableColumns;
+    
+        const headerLocators = this.tableHeadersColumnsSelectors;
+    
+        for (let i = 0; i < expectedHeaders.length; i++) {
+            const headerText = (await headerLocators.nth(i).textContent())?.trim().toLowerCase();
+            const expectedText = expectedHeaders[i].trim().toLowerCase();
+    
+            expect(headerText).toBe(expectedText);
+            console.log(`✅ Header matched: ${expectedText}`);
+        }
+    }
+    
 
 
 }

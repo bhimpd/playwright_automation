@@ -118,6 +118,8 @@ test.only("Add the Product to the cart", async({page})=>{
 
     await helper.urlAssertion("https://automationexercise.com/view_cart");
 
+    await product.assertTableHeaders();
+
     await page.waitForTimeout(5000);
 
 });
