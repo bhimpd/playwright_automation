@@ -24,6 +24,8 @@ export class ProductPage{
     readonly subCategoryLabelSelector: Locator;
     readonly brandLabelSelector: Locator;
     readonly brandQuantitySelector: Locator;
+    readonly productWrapperSelector: Locator;
+
 
 
     constructor(page:Page){
@@ -44,6 +46,7 @@ export class ProductPage{
         this.subCategoryLabelSelector = page.locator(".panel-body ul li a");
         this.brandLabelSelector = page.locator(".brands-name ul li a");
         this.brandQuantitySelector = page.locator(".brands-name ul li a .pull-right");
+        this.productWrapperSelector = page.locator('.product-image-wrapper');
 
 
 
@@ -214,5 +217,27 @@ export class ProductPage{
             // await this.page.waitForTimeout(2000);
         }
     }
+
+
+    async addProductToCart(){
+        const count = await this.productWrapperSelector.count();
+        const randomIndex = Math.floor(Math.random() * count);
+
+        const selectedProduct = this.productWrapperSelector.nth(randomIndex);
+
+        // Hover to make the overlay appear if needed
+        await selectedProduct.hover();
+
+        // Click the add-to-cart button (visible in overlay or normal view)
+        const addToCartBtn = selectedProduct.locator('.add-to-cart').first(); // just in case multiple exist
+        await addToCartBtn.click();
+
+        console.log(`✅ Added random product at index ${randomIndex} to cart`);
+        
+
+
+    }
+
+
 
 }
