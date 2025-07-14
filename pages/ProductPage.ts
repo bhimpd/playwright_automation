@@ -246,12 +246,12 @@ export class ProductPage{
         await this.assertContinueShoppingLabel("Continue Shopping");
         await this.assertModalAddedLabel("Added!");
         await this.assertModalBodyLabel("Your product has been added to cart.");
-        await this.page.waitForTimeout(4000);
+        // await this.page.waitForTimeout(4000);
     
         if (clickViewCartInsteadOfContinue) {
             await this.assertViewCartLabel("View Cart");
             await this.clickViewCart();
-            await this.page.waitForTimeout(4000);
+            // await this.page.waitForTimeout(4000);
 
         } else {
             await this.clickContinueShopping();
