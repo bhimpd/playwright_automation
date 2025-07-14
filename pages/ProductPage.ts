@@ -25,6 +25,11 @@ export class ProductPage{
     readonly brandLabelSelector: Locator;
     readonly brandQuantitySelector: Locator;
     readonly productWrapperSelector: Locator;
+    readonly classModalSelector: Locator;
+    readonly viewCartSelector: Locator;
+    readonly modalAddedLabelSelector: Locator;
+    readonly modalBodyLabelSelector: Locator;
+
 
 
 
@@ -47,6 +52,10 @@ export class ProductPage{
         this.brandLabelSelector = page.locator(".brands-name ul li a");
         this.brandQuantitySelector = page.locator(".brands-name ul li a .pull-right");
         this.productWrapperSelector = page.locator('.product-image-wrapper');
+        this.classModalSelector = page.locator('.close-modal[data-dismiss="modal"]');
+        this.viewCartSelector = page.locator('a[href="/view_cart"] u');
+        this.modalAddedLabelSelector = page.locator('.modal-header h4.modal-title.w-100');
+        this.modalBodyLabelSelector = page.locator('.modal-body p.text-center');
 
 
 
@@ -219,24 +228,68 @@ export class ProductPage{
     }
 
 
-    async addProductToCart(){
+    async addProductToCart(clickViewCartInsteadOfContinue: boolean = false) {
         const count = await this.productWrapperSelector.count();
         const randomIndex = Math.floor(Math.random() * count);
-
+    
         const selectedProduct = this.productWrapperSelector.nth(randomIndex);
-
+    
         // Hover to make the overlay appear if needed
         await selectedProduct.hover();
-
-        // Click the add-to-cart button (visible in overlay or normal view)
-        const addToCartBtn = selectedProduct.locator('.add-to-cart').first(); // just in case multiple exist
+    
+        const name = await selectedProduct.locator('.productinfo p').textContent();
+        const price = await selectedProduct.locator('.productinfo h2').textContent();
+    
+        const addToCartBtn = selectedProduct.locator('.add-to-cart').first();
         await addToCartBtn.click();
+    
+        await this.assertContinueShoppingLabel("Continue Shopping");
+        await this.assertModalAddedLabel("Added!");
+        await this.assertModalBodyLabel("Your product has been added to cart.");
+        await this.page.waitForTimeout(4000);
+    
+        if (clickViewCartInsteadOfContinue) {
+            await this.assertViewCartLabel("View Cart");
+            await this.clickViewCart();
+            await this.page.waitForTimeout(4000);
 
+        } else {
+            await this.clickContinueShopping();
+        }
+    
         console.log(`✅ Added random product at index ${randomIndex} to cart`);
-        
-
-
+        console.log("NAME :::", name);
+        console.log("PRICE :::", price);
     }
+    
+
+    async assertModalAddedLabel(expectedText:string){
+        await expect(this.modalAddedLabelSelector).toHaveText(expectedText);
+    }
+
+    async assertModalBodyLabel(expectedText: string) {
+        await expect(this.modalBodyLabelSelector.filter({ hasText: expectedText })).toHaveText(expectedText);
+    }
+    
+
+
+    async assertContinueShoppingLabel(expectedText:string){
+        await expect(this.classModalSelector).toHaveText(expectedText);
+    }
+
+    async clickContinueShopping(){
+        await this.classModalSelector.click();
+    }
+
+
+    async assertViewCartLabel(expectedText:string){
+        await expect(this.viewCartSelector).toHaveText(expectedText);
+    }
+
+    async clickViewCart(){
+        await this.viewCartSelector.click();
+    }
+
 
 
 

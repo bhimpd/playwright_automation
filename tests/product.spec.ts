@@ -113,7 +113,8 @@ test.only("Add the Product to the cart", async({page})=>{
     await product.clickProductButton();
     await helper.urlAssertion("https://automationexercise.com/products");
 
-    await product.addProductToCart();
+     await product.addProductToCart();
+     await product.addProductToCart(true);;
 
     await page.waitForTimeout(5000);
 
