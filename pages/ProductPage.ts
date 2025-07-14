@@ -32,6 +32,11 @@ export class ProductPage{
     readonly modalAddedLabelSelector: Locator;
     readonly modalBodyLabelSelector: Locator;
     readonly tableHeadersColumnsSelectors: Locator;
+    readonly cartPageNameSelectors: Locator;
+    readonly cartPagePriceSelectors: Locator;
+    readonly cartPageQuantitySelectors: Locator;
+    readonly cartPageTotalSelectors: Locator;
+    
 
 
     constructor(page:Page){
@@ -59,8 +64,11 @@ export class ProductPage{
         this.modalBodyLabelSelector = page.locator('.modal-body p.text-center');
         this.tableHeadersColumnsSelectors = page.locator('thead tr.cart_menu td');
 
-
-        
+        this.cartPageNameSelectors = page.locator('.cart_description h4 a');
+        this.cartPagePriceSelectors = page.locator('.cart_price p');
+        this.cartPageQuantitySelectors = page.locator('.cart_quantity button');
+        this.cartPageTotalSelectors = page.locator('.cart_total_price');
+      
 
     }
 
@@ -311,26 +319,20 @@ export class ProductPage{
     }
     
     async assertCartItems(expectedItems: { name: string; price: string }[]) {
-        const rows = this.page.locator('tbody tr');
-    
-        const count = await rows.count();
+        const count = await this.cartPageNameSelectors.count();
         expect(count).toBe(expectedItems.length);
     
         for (let i = 0; i < count; i++) {
-            const row = rows.nth(i);
-    
-            const name = await row.locator('.cart_description h4 a').textContent();
-            const price = await row.locator('.cart_price p').textContent();
-            const quantity = await row.locator('.cart_quantity button').textContent();
-            const total = await row.locator('.cart_total_price').textContent();
+            const name = await this.cartPageNameSelectors.nth(i).textContent();
+            const price = await this.cartPagePriceSelectors.nth(i).textContent();
+            const quantity = await this.cartPageQuantitySelectors.nth(i).textContent();
+            const total = await this.cartPageTotalSelectors.nth(i).textContent();
     
             const expected = expectedItems[i];
     
-            // Clean up whitespace just in case
             expect(name?.trim()).toBe(expected.name?.trim());
             expect(price?.trim()).toBe(expected.price?.trim());
     
-            // Optional: Parse quantity & total into numbers for deeper validation
             const priceNum = parseInt(price!.replace(/[^\d]/g, ""));
             const quantityNum = parseInt(quantity!);
             const totalNum = parseInt(total!.replace(/[^\d]/g, ""));
@@ -340,6 +342,7 @@ export class ProductPage{
             console.log(`✅ Cart item ${i + 1} validated: ${name}, ${price}, Qty: ${quantity}, Total: ${total}`);
         }
     }
+    
     
 
 }
