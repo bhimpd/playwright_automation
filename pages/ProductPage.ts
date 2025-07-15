@@ -39,8 +39,9 @@ export class ProductPage{
     readonly detailPageImageSelector: Locator;
     readonly detailPageNameSelector: Locator;
     readonly detailPagePriceSelector: Locator;
-
-    
+    readonly detailPageQuantityLabelSelector: Locator;
+    readonly detailPageAddToCartLabelSelector: Locator;
+   
 
 
     constructor(page:Page){
@@ -76,6 +77,10 @@ export class ProductPage{
         this.detailPageImageSelector = page.locator('.product-details .view-product img');
         this.detailPageNameSelector = page.locator('.product-details .product-information h2');
         this.detailPagePriceSelector = page.locator('.product-details .product-information span span');
+
+        this.detailPageQuantityLabelSelector = page.locator('.product-details .product-information span label');
+        this.detailPageAddToCartLabelSelector = page.locator('.product-details .product-information span .btn.btn-default.cart');
+
 
     }
 
@@ -264,7 +269,7 @@ export class ProductPage{
         await this.assertContinueShoppingLabel("Continue Shopping");
         await this.assertModalAddedLabel("Added!");
         await this.assertModalBodyLabel("Your product has been added to cart.");
-        // await this.page.waitForTimeout(4000);
+        // await th Products", "/productsis.page.waitForTimeout(4000);
     
         if (clickViewCartInsteadOfContinue) {
             await this.assertViewCartLabel("View Cart");
@@ -359,6 +364,15 @@ export class ProductPage{
 
     }
 
+
+    async assertDetailPageQuantityLabel(expectedText: string){
+        await expect(this.detailPageQuantityLabelSelector).toHaveText(expectedText);
+    }
+
+
+    async assertDetailPageAddToCartLabel(expectedText: string){
+        await expect(this.detailPageAddToCartLabelSelector).toContainText(expectedText);
+    }
     
     
 
