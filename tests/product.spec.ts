@@ -153,6 +153,8 @@ test.only("Assert the product quantity", async({page})=>{
     await product.assertDetailPageProduct(searchedProduct);
     await product.assertDetailPageQuantityLabel("Quantity:");
     await product.assertDetailPageAddToCartLabel(" Add to cart ");
+    await product.typeQuantityToAdd();
+
 
 
     await page.waitForTimeout(5000);

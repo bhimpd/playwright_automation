@@ -41,7 +41,7 @@ export class ProductPage{
     readonly detailPagePriceSelector: Locator;
     readonly detailPageQuantityLabelSelector: Locator;
     readonly detailPageAddToCartLabelSelector: Locator;
-   
+    readonly detailPageQuantitySelector: Locator;
 
 
     constructor(page:Page){
@@ -80,6 +80,7 @@ export class ProductPage{
 
         this.detailPageQuantityLabelSelector = page.locator('.product-details .product-information span label');
         this.detailPageAddToCartLabelSelector = page.locator('.product-details .product-information span .btn.btn-default.cart');
+        this.detailPageQuantitySelector = page.locator('#quantity');
 
 
     }
@@ -374,6 +375,8 @@ export class ProductPage{
         await expect(this.detailPageAddToCartLabelSelector).toContainText(expectedText);
     }
     
-    
+    async typeQuantityToAdd(){
+        await this.detailPageQuantitySelector.fill("4");
+    }
 
 }
