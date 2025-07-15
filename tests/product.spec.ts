@@ -146,6 +146,11 @@ test.only("Assert the product quantity", async({page})=>{
     // console.log("Searched Product :: ", searchedProduct);
 
     await product.scrollToSection();
+    await product.assertSearchedProduct(searchedProduct);
+
+    await product.clickViewProductButton();
+
+    await product.assertDetailPageProduct(searchedProduct);
     await page.waitForTimeout(5000);
 
 

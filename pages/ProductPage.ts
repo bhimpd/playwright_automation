@@ -36,6 +36,10 @@ export class ProductPage{
     readonly cartPagePriceSelectors: Locator;
     readonly cartPageQuantitySelectors: Locator;
     readonly cartPageTotalSelectors: Locator;
+    readonly detailPageImageSelector: Locator;
+    readonly detailPageNameSelector: Locator;
+    readonly detailPagePriceSelector: Locator;
+
     
 
 
@@ -68,7 +72,10 @@ export class ProductPage{
         this.cartPagePriceSelectors = page.locator('.cart_price p');
         this.cartPageQuantitySelectors = page.locator('.cart_quantity button');
         this.cartPageTotalSelectors = page.locator('.cart_total_price');
-      
+
+        this.detailPageImageSelector = page.locator('.product-details .view-product img');
+        this.detailPageNameSelector = page.locator('.product-details .product-information h2');
+        this.detailPagePriceSelector = page.locator('.product-details .product-information span span');
 
     }
 
@@ -342,6 +349,16 @@ export class ProductPage{
             console.log(`✅ Cart item ${i + 1} validated: ${name}, ${price}, Qty: ${quantity}, Total: ${total}`);
         }
     }
+
+
+    async assertDetailPageProduct(searchedProduct:any){
+
+        await expect(this.detailPageNameSelector).toHaveText(searchedProduct.name);
+        await expect(this.detailPagePriceSelector).toHaveText(`Rs. ${searchedProduct.price}`);
+        await expect(this.detailPageImageSelector).toHaveAttribute("src", searchedProduct.src);
+
+    }
+
     
     
 
