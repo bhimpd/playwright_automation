@@ -165,6 +165,15 @@ test.only("Assert the product quantity", async({page})=>{
     await product.assertTableHeaders();
 
 
+    console.log("Added Product to Cart ::", searchedProduct);
+    await product.assertDetailPageCartItems(
+        {
+          name: searchedProduct.name,
+          price: searchedProduct.price,
+          quantity: 4,
+        }
+      );
+
     await page.waitForTimeout(5000);
 
 

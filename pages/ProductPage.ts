@@ -384,6 +384,33 @@ export class ProductPage{
     }
     
 
+    async assertDetailPageCartItems(expectedItem: {
+        name: string;
+        price: number;
+        quantity: number;
+      }) {
+        // Assert only one row exists
+        const rows = this.page.locator('tbody tr');
+        const count = await rows.count();
+        expect(count).toBe(1); // since we expect only one product
+      
+        // Directly use your selectors (since they're already defined)
+        const name = await this.cartPageNameSelectors.textContent();
+        const price = await this.cartPagePriceSelectors.textContent();
+        const quantity = await this.cartPageQuantitySelectors.textContent();
+        const total = await this.cartPageTotalSelectors.textContent();
+      
+        // Assertions
+        expect(name?.trim()).toBe(expectedItem.name);
+        expect(price?.replace(/\s|Rs\./g, '')).toBe(expectedItem.price.toString());
+        expect(quantity?.trim()).toBe(expectedItem.quantity.toString());
+      
+        const totalValue = parseInt(total!.replace(/[^\d]/g, ''));
+        expect(totalValue).toBe(expectedItem.price * expectedItem.quantity);
+      
+        console.log(`✅ Cart item validated: ${name}, ${price}, Qty: ${quantity}, Total: ${total}`);
+      }
+      
 
 
 }
