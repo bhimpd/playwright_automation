@@ -133,5 +133,20 @@ test("Add the Product to the cart", async({page})=>{
 
 test.only("Assert the product quantity", async({page})=>{
 
+    const helper = new Helper(page);
+    const product = new ProductPage(page);
+
+    await product.assertProducts(" Products", "/products");
+    await product.clickProductButton();
+    await helper.urlAssertion("https://automationexercise.com/products");
+
+    const searchedProduct =  await product.searchProduct();
+    await product.clickSearch();
+
+    // console.log("Searched Product :: ", searchedProduct);
+
+    await product.scrollToSection();
+    await page.waitForTimeout(5000);
+
 
 });
