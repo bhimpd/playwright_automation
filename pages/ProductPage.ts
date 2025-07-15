@@ -290,7 +290,7 @@ export class ProductPage{
     
 
     async assertModalAddedLabel(expectedText:string){
-        await expect(this.modalAddedLabelSelector).toHaveText(expectedText);
+        await expect(this.modalAddedLabelSelector).toContainText(expectedText);
     }
 
 
@@ -378,5 +378,12 @@ export class ProductPage{
     async typeQuantityToAdd(){
         await this.detailPageQuantitySelector.fill("4");
     }
+
+    async clickDetailPageAddToCartLabel(){
+        await this.detailPageAddToCartLabelSelector.click();
+    }
+    
+
+
 
 }

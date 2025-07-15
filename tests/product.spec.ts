@@ -154,7 +154,15 @@ test.only("Assert the product quantity", async({page})=>{
     await product.assertDetailPageQuantityLabel("Quantity:");
     await product.assertDetailPageAddToCartLabel(" Add to cart ");
     await product.typeQuantityToAdd();
+    await product.clickDetailPageAddToCartLabel();
 
+    await product.assertModalAddedLabel("Added!");
+    await product.assertModalBodyLabel("Your product has been added to cart.");
+    await product.assertViewCartLabel("View Cart");
+    await product.clickViewCart();
+
+    await helper.urlAssertion("https://automationexercise.com/view_cart");
+    await product.assertTableHeaders();
 
 
     await page.waitForTimeout(5000);
