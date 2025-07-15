@@ -105,7 +105,7 @@ test("Assert the BrandNames and Links", async({page})=>{
 
 });
 
-test.only("Add the Product to the cart", async({page})=>{
+test("Add the Product to the cart", async({page})=>{
     const helper = new Helper(page);
     const product = new ProductPage(page);
 
@@ -128,5 +128,10 @@ test.only("Add the Product to the cart", async({page})=>{
 
 
     await page.waitForTimeout(5000);
+
+});
+
+test.only("Assert the product quantity", async({page})=>{
+
 
 });
