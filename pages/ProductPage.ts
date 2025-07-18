@@ -50,6 +50,9 @@ export class ProductPage{
     readonly registerLoginTextLabelSelector: Locator;
     readonly registerLoginLabelSelector: Locator;
 
+    readonly continueOnCartSelector: Locator;
+
+
 
     constructor(page:Page){
         this.page = page;
@@ -93,7 +96,9 @@ export class ProductPage{
 
 
         this.checkoutLabelSelector = page.locator("#checkoutModal h4.modal-title.w-100");
-
+        this.registerLoginTextLabelSelector = page.locator("#checkoutModal .modal-body p.text-center");
+        this.registerLoginLabelSelector = page.locator("#checkoutModal a u");
+        this.continueOnCartSelector = page.locator(".btn.btn-success.close-checkout-modal.btn-block");
 
     }
 
@@ -436,5 +441,19 @@ export class ProductPage{
     async assertCheckoutLabel(expectedText:string){
         await expect(this.checkoutLabelSelector).toHaveText(expectedText); 
     }
+    
+    async assertRegisterLoginText(expectedText:string){
+        await expect(this.registerLoginTextLabelSelector.filter({ hasText: expectedText })).toHaveText(expectedText);
+    }
       
+    async assertRegisterLoginLinkText(expectedText:string){
+        await expect(this.registerLoginLabelSelector).toHaveText(expectedText); 
+    }
+
+    async assertContinueOnCartLabel(expectedText:string){
+        await expect(this.continueOnCartSelector).toHaveText(expectedText); 
+    }
+      
+
+
 }

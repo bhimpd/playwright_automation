@@ -227,9 +227,11 @@ test.only("Place Order -- Login while Order the Product", async({page})=>{
 
     await product.assertProceedToCheckoutLabel("Proceed To Checkout");
     await product.clickProceedToCheckout();
-    
-    await product.assertCheckoutLabel("Checkout");
 
+    await product.assertCheckoutLabel("Checkout");
+    await product.assertRegisterLoginText("Register / Login account to proceed on checkout.");
+    await product.assertRegisterLoginLinkText("Register / Login");
+    await product.assertContinueOnCartLabel("Continue On Cart")
 
     await page.waitForTimeout(5000);
 
