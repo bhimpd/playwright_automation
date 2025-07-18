@@ -223,6 +223,14 @@ test.only("Place Order -- Login while Order the Product", async({page})=>{
         }
       );
 
+    await page.waitForTimeout(1000);
+
+    await product.assertProceedToCheckoutLabel("Proceed To Checkout");
+    await product.clickProceedToCheckout();
+    
+    await product.assertCheckoutLabel("Checkout");
+
+
     await page.waitForTimeout(5000);
 
 

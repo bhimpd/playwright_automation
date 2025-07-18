@@ -43,6 +43,13 @@ export class ProductPage{
     readonly detailPageAddToCartLabelSelector: Locator;
     readonly detailPageQuantitySelector: Locator;
 
+    readonly proceedToCheckoutSelector: Locator;
+
+
+    readonly checkoutLabelSelector: Locator;
+    readonly registerLoginTextLabelSelector: Locator;
+    readonly registerLoginLabelSelector: Locator;
+
 
     constructor(page:Page){
         this.page = page;
@@ -81,6 +88,11 @@ export class ProductPage{
         this.detailPageQuantityLabelSelector = page.locator('.product-details .product-information span label');
         this.detailPageAddToCartLabelSelector = page.locator('.product-details .product-information span .btn.btn-default.cart');
         this.detailPageQuantitySelector = page.locator('#quantity');
+
+        this.proceedToCheckoutSelector = page.locator("a.btn.btn-default.check_out");
+
+
+        this.checkoutLabelSelector = page.locator("#checkoutModal h4.modal-title.w-100");
 
 
     }
@@ -409,6 +421,20 @@ export class ProductPage{
         expect(totalValue).toBe(expectedItem.price * expectedItem.quantity);
       
         console.log(`✅ Cart item validated: ${name}, ${price}, Qty: ${quantity}, Total: ${total}`);
+    }
+
+
+    async assertProceedToCheckoutLabel(expectedText:string){
+        await expect(this.proceedToCheckoutSelector).toHaveText(expectedText); 
+    }
+
+    async clickProceedToCheckout(){
+        await this.proceedToCheckoutSelector.click();
+    }
+
+
+    async assertCheckoutLabel(expectedText:string){
+        await expect(this.checkoutLabelSelector).toHaveText(expectedText); 
     }
       
 }
