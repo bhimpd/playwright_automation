@@ -409,8 +409,6 @@ export class ProductPage{
         expect(totalValue).toBe(expectedItem.price * expectedItem.quantity);
       
         console.log(`✅ Cart item validated: ${name}, ${price}, Qty: ${quantity}, Total: ${total}`);
-      }
+    }
       
-
-
 }

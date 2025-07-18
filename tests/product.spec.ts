@@ -131,7 +131,56 @@ test("Add the Product to the cart", async({page})=>{
 
 });
 
-test.only("Assert the product quantity", async({page})=>{
+test("Assert the product quantity", async({page})=>{
+
+    const helper = new Helper(page);
+    const product = new ProductPage(page);
+
+    await product.assertProducts(" Products", "/products");
+    await product.clickProductButton();
+    await helper.urlAssertion("https://automationexercise.com/products");
+
+    const searchedProduct =  await product.searchProduct();
+    await product.clickSearch();
+
+    // console.log("Searched Product :: ", searchedProduct);
+
+    await product.scrollToSection();
+    await product.assertSearchedProduct(searchedProduct);
+
+    await product.clickViewProductButton();
+
+    await product.assertDetailPageProduct(searchedProduct);
+    await product.assertDetailPageQuantityLabel("Quantity:");
+    await product.assertDetailPageAddToCartLabel(" Add to cart ");
+    await product.typeQuantityToAdd();
+    await product.clickDetailPageAddToCartLabel();
+
+    await product.assertModalAddedLabel("Added!");
+    await product.assertModalBodyLabel("Your product has been added to cart.");
+    await product.assertViewCartLabel("View Cart");
+    await product.clickViewCart();
+
+    await helper.urlAssertion("https://automationexercise.com/view_cart");
+    await product.assertTableHeaders();
+
+
+    console.log("Added Product to Cart ::", searchedProduct);
+    await product.assertDetailPageCartItems(
+        {
+          name: searchedProduct.name,
+          price: searchedProduct.price,
+          quantity: 4,
+        }
+      );
+
+    await page.waitForTimeout(5000);
+
+
+});
+
+
+test.only("Place Order -- register while Order the Product", async({page})=>{
 
     const helper = new Helper(page);
     const product = new ProductPage(page);
