@@ -455,5 +455,9 @@ export class ProductPage{
     }
       
 
+    async clickRegisterLoginButton(){
+        await this.registerLoginLabelSelector.click();
+    }
+
 
 }
