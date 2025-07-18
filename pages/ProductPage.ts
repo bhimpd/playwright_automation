@@ -51,6 +51,7 @@ export class ProductPage{
     readonly registerLoginLabelSelector: Locator;
 
     readonly continueOnCartSelector: Locator;
+    readonly cartPageSelector:Locator;
 
 
 
@@ -99,6 +100,9 @@ export class ProductPage{
         this.registerLoginTextLabelSelector = page.locator("#checkoutModal .modal-body p.text-center");
         this.registerLoginLabelSelector = page.locator("#checkoutModal a u");
         this.continueOnCartSelector = page.locator(".btn.btn-success.close-checkout-modal.btn-block");
+
+        this.cartPageSelector = page.locator('a[href="/view_cart"]');
+
 
     }
 
@@ -457,6 +461,10 @@ export class ProductPage{
 
     async clickRegisterLoginButton(){
         await this.registerLoginLabelSelector.click();
+    }
+
+    async clickViewCartPage(){
+        await this.cartPageSelector.click();
     }
 
 

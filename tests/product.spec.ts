@@ -1,6 +1,8 @@
 import test from "@playwright/test";
 import { Helper } from "../helpers/helper";
 import { ProductPage } from "../pages/ProductPage";
+import { RegiserPage } from "../pages/RegisterPage";
+import { saveCredentials, getCredentials} from "../utilis/userData";
 
 
 test.beforeEach( async({page}) =>{
@@ -184,6 +186,10 @@ test.only("Place Order -- Login while Order the Product", async({page})=>{
 
     const helper = new Helper(page);
     const product = new ProductPage(page);
+    const register = new RegiserPage(page);
+
+    const { email, password } = getCredentials(); // 👈 Read saved email & password
+
 
     await product.assertProducts(" Products", "/products");
     await product.clickProductButton();
@@ -234,6 +240,11 @@ test.only("Place Order -- Login while Order the Product", async({page})=>{
     await product.assertContinueOnCartLabel("Continue On Cart");
 
     await product.clickRegisterLoginButton();
+    await helper.urlAssertion("https://automationexercise.com/login");
+    await register.login(email, password); 
+
+    await product.clickViewCart();
+
 
 
     await page.waitForTimeout(5000);
