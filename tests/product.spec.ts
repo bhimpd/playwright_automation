@@ -180,7 +180,7 @@ test("Assert the product quantity", async({page})=>{
 });
 
 
-test.only("Place Order -- register while Order the Product", async({page})=>{
+test.only("Place Order -- Login while Order the Product", async({page})=>{
 
     const helper = new Helper(page);
     const product = new ProductPage(page);
