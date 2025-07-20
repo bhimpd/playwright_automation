@@ -243,9 +243,7 @@ test.only("Place Order -- Login while Order the Product", async({page})=>{
     await helper.urlAssertion("https://automationexercise.com/login");
     await register.login(email, password); 
 
-    await product.clickViewCart();
-
-
+    await product.clickCart();
 
     await page.waitForTimeout(5000);
 

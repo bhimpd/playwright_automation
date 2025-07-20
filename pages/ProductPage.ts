@@ -51,7 +51,7 @@ export class ProductPage{
     readonly registerLoginLabelSelector: Locator;
 
     readonly continueOnCartSelector: Locator;
-    readonly cartPageSelector:Locator;
+    readonly cartSelector:Locator;
 
 
 
@@ -76,6 +76,8 @@ export class ProductPage{
         this.productWrapperSelector = page.locator('.product-image-wrapper');
         this.classModalSelector = page.locator('.close-modal[data-dismiss="modal"]');
         this.viewCartSelector = page.locator('a[href="/view_cart"] u');
+        this.cartSelector = page.locator('a[href="/view_cart"] u');
+
         this.modalAddedLabelSelector = page.locator('.modal-header h4.modal-title.w-100');
         this.modalBodyLabelSelector = page.locator('.modal-body p.text-center');
         this.tableHeadersColumnsSelectors = page.locator('thead tr.cart_menu td');
@@ -101,7 +103,7 @@ export class ProductPage{
         this.registerLoginLabelSelector = page.locator("#checkoutModal a u");
         this.continueOnCartSelector = page.locator(".btn.btn-success.close-checkout-modal.btn-block");
 
-        this.cartPageSelector = page.locator('a[href="/view_cart"]');
+        this.cartSelector = page.locator('.nav.navbar-nav a[href="/view_cart"]');
 
 
     }
@@ -112,6 +114,10 @@ export class ProductPage{
 
     async clickProductButton(){
         await this.productSelector.click();
+    }
+
+    async clickCart(){
+        await this.cartSelector.click();
     }
 
     async allProductsLabelAssertion(expectedText:string){
@@ -463,9 +469,6 @@ export class ProductPage{
         await this.registerLoginLabelSelector.click();
     }
 
-    async clickViewCartPage(){
-        await this.cartPageSelector.click();
-    }
 
 
 }
