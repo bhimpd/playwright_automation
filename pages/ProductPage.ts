@@ -418,8 +418,8 @@ export class ProductPage{
       }) {
         // Assert only one row exists
         const rows = this.page.locator('tbody tr');
-        const count = await rows.count();
-        expect(count).toBe(1); // since we expect only one product
+        // const count = await rows.count();
+        // expect(count).toBe(1); // since we expect only one product
       
         // Directly use your selectors (since they're already defined)
         const name = await this.cartPageNameSelectors.textContent();

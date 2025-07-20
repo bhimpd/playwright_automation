@@ -5,6 +5,8 @@ import { faker } from '@faker-js/faker';
 import { saveCredentials, getCredentials} from "../utilis/userData";
 import { saveUserDetails } from "../utilis/userDetails";
 import { ProductPage } from "../pages/ProductPage";
+import { CartPage } from "../pages/CartPage";
+
 
 
 test.beforeEach(async({page}) =>{
@@ -201,6 +203,8 @@ test.describe.serial.only("Register and Login and Checkout Full FLow", () => {
     test("Login with saved credentials and place order", async ({ page }) => {
         const helper = new Helper(page);
         const register = new RegiserPage(page);
+        const cart = new CartPage(page);
+
 
         const { email, password } = getCredentials(); // 👈 Read saved email & password
 
@@ -257,6 +261,24 @@ test.describe.serial.only("Register and Login and Checkout Full FLow", () => {
     
         await product.assertProceedToCheckoutLabel("Proceed To Checkout");
         await product.clickProceedToCheckout();
+
+        await helper.urlAssertion("https://automationexercise.com/checkout");
+
+        await cart.assertAddressDetailsLabel("Address Details");
+        await cart.assertDeliveryAddressLabel("Your delivery address");
+        await cart.assertBillinAddressLabel("Your billing address");
+        await cart.assertAddressDetailsLabel("Review Your Order");
+        await product.assertTableHeaders();
+
+        // await product.assertDetailPageCartItems(
+        //     {
+        //       name: searchedProduct.name,
+        //       price: searchedProduct.price,
+        //       quantity: 4,
+        //     }
+        //   );
+    
+
         await page.waitForTimeout(5000);   
     });
     
