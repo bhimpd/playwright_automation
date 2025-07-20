@@ -1,6 +1,7 @@
 import { Locator, Page,expect } from "@playwright/test";
 import { Helper } from "../helpers/helper";
 
+
 export class RegiserPage{
     readonly page:Page
     readonly helper:Helper;
@@ -165,6 +166,8 @@ export class RegiserPage{
         await expect(this.createAccountSelector).toHaveText("Create Account");
         await this.createAccountSelector.click();
     }
+
+
 
     async accountCreatedLabelAssertion(expectedText:string){
         await expect(this.accountCreatedSelectcor).toHaveText(expectedText);

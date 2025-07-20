@@ -3,6 +3,7 @@ import { Helper } from "../helpers/helper";
 import { RegiserPage } from "../pages/RegisterPage";
 import { faker } from '@faker-js/faker';
 import { saveCredentials, getCredentials} from "../utilis/userData";
+import { saveUserDetails } from "../utilis/userDetails";
 
 
 test.beforeEach(async({page}) =>{
@@ -50,6 +51,28 @@ test.describe.serial("Register and Login Flow", () => {
 
         await register.fillAccountInformation(randomEmail,password);
         await register.fillAddressInformation();
+        saveUserDetails({
+            name: "Bhim",
+            email: randomEmail,
+            password: password,
+            dob: {
+              day: "1",
+              month: "January",
+              year: "2000"
+            },
+            address: {
+              firstName: "Bhim",
+              lastName: "Lamichhane",
+              company: "Test Company",
+              address1: "Kalika Margh 25, Sanepa",
+              address2: "Lalitpur",
+              country: "United States",
+              state: "Provience 4",
+              city: "Balen City",
+              zipcode: "6969",
+              mobile: "+977-9814412345"
+            }
+          });
 
         await helper.urlAssertion("https://automationexercise.com/account_created");
         await register.accountCreatedLabelAssertion("Account Created!");
