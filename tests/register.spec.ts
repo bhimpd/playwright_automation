@@ -4,6 +4,7 @@ import { RegiserPage } from "../pages/RegisterPage";
 import { faker } from '@faker-js/faker';
 import { saveCredentials, getCredentials} from "../utilis/userData";
 import { saveUserDetails } from "../utilis/userDetails";
+import { ProductPage } from "../pages/ProductPage";
 
 
 test.beforeEach(async({page}) =>{
@@ -132,4 +133,131 @@ test("Signup with already existing  credentials", async({page})=>{
     await register.errorMessageAssertion("Email Address already exist!")
 
 })
+
+
+
+test.describe.serial.only("Register and Login and Checkout Full FLow", () => {
+
+    test("Should fill the input,click Sign and Assert the text in Register Page and Register the User", async({page})=>{
+        const helper = new Helper(page);
+        const register = new RegiserPage(page);
+
+        const randomEmail = `dreamypd73+${faker.string.alphanumeric(6)}@gmail.com`;
+        const password ="Password1!"
+        saveCredentials(randomEmail,password);
+        
+        await register.fillname("Bhim");
+        await register.fillemail(randomEmail);
+
+        register.clickSignIn();
+        await helper.urlAssertion("https://automationexercise.com/signup");
+        
+        await register.assertAccountAndAddressLabel(0,"Enter Account Information");
+        await register.assertAccountAndAddressLabel(1,"Address Information");
+
+        await register.fillAccountInformation(randomEmail,password);
+        await register.fillAddressInformation();
+        saveUserDetails({
+            name: "Bhim",
+            email: randomEmail,
+            password: password,
+            dob: {
+              day: "1",
+              month: "January",
+              year: "2000"
+            },
+            address: {
+              firstName: "Bhim",
+              lastName: "Lamichhane",
+              company: "Test Company",
+              address1: "Kalika Margh 25, Sanepa",
+              address2: "Lalitpur",
+              country: "United States",
+              state: "Provience 4",
+              city: "Balen City",
+              zipcode: "6969",
+              mobile: "+977-9814412345"
+            }
+          });
+
+        await helper.urlAssertion("https://automationexercise.com/account_created");
+        await register.accountCreatedLabelAssertion("Account Created!");
+        await register.continueButtonAssertionAndClick("Continue");
+        
+        await helper.urlAssertion("https://automationexercise.com");
+        await register.logoutAssertion("Logout","/logout");
+        await register.deleteAccountAssertion("Delete Account","/delete_account");
+        await register.loggedInAssertion();
+
+        await register.clickLogOutButton();
+        await helper.urlAssertion("https://automationexercise.com/login");
+        await register.loginSignInAssertion("Signup / Login", "/login")
+        await register.loggeOutAssertion();
+
+        await page.waitForTimeout(5000);
+    });
+
+    test("Login with saved credentials and place order", async ({ page }) => {
+        const helper = new Helper(page);
+        const register = new RegiserPage(page);
+
+        const { email, password } = getCredentials(); // 👈 Read saved email & password
+
+        await helper.visitpage("https://automationexercise.com/");
+        await register.clickSignUp();
+        await helper.urlAssertion("https://automationexercise.com/login");
+
+        await register.login(email, password); 
+
+        await helper.urlAssertion("https://automationexercise.com");
+        await register.logoutAssertion("Logout","/logout");
+        await register.deleteAccountAssertion("Delete Account","/delete_account");
+        await register.loggedInAssertion();
+
+        const product = new ProductPage(page);
+    
+        await product.assertProducts(" Products", "/products");
+        await product.clickProductButton();
+        await helper.urlAssertion("https://automationexercise.com/products");
+    
+        const searchedProduct =  await product.searchProduct();
+        await product.clickSearch();
+    
+        // console.log("Searched Product :: ", searchedProduct);
+    
+        await product.scrollToSection();
+        await product.assertSearchedProduct(searchedProduct);
+    
+        await product.clickViewProductButton();
+    
+        await product.assertDetailPageProduct(searchedProduct);
+        await product.assertDetailPageQuantityLabel("Quantity:");
+        await product.assertDetailPageAddToCartLabel(" Add to cart ");
+        await product.typeQuantityToAdd();
+        await product.clickDetailPageAddToCartLabel();
+    
+        await product.assertModalAddedLabel("Added!");
+        await product.assertModalBodyLabel("Your product has been added to cart.");
+        await product.assertViewCartLabel("View Cart");
+        await product.clickViewCart();
+    
+        await helper.urlAssertion("https://automationexercise.com/view_cart");
+        await product.assertTableHeaders();
+    
+    
+        console.log("Added Product to Cart ::", searchedProduct);
+        await product.assertDetailPageCartItems(
+            {
+              name: searchedProduct.name,
+              price: searchedProduct.price,
+              quantity: 4,
+            }
+          );
+    
+        await page.waitForTimeout(5000);   
+    });
+    
+
+});
+
 

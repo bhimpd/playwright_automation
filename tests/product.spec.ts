@@ -3,6 +3,8 @@ import { Helper } from "../helpers/helper";
 import { ProductPage } from "../pages/ProductPage";
 import { RegiserPage } from "../pages/RegisterPage";
 import { saveCredentials, getCredentials} from "../utilis/userData";
+import { saveUserDetails } from "../utilis/userDetails";
+import { faker } from '@faker-js/faker';
 
 
 test.beforeEach( async({page}) =>{
@@ -249,3 +251,5 @@ test("Place Order -- Login while Order the Product", async({page})=>{
 
 
 });
+
+
