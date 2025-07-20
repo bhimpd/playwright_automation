@@ -196,7 +196,8 @@ test.describe.serial.only("Register and Login and Checkout Full FLow", () => {
 
         await page.waitForTimeout(5000);
     });
-
+    
+    
     test("Login with saved credentials and place order", async ({ page }) => {
         const helper = new Helper(page);
         const register = new RegiserPage(page);
@@ -254,6 +255,8 @@ test.describe.serial.only("Register and Login and Checkout Full FLow", () => {
             }
           );
     
+        await product.assertProceedToCheckoutLabel("Proceed To Checkout");
+        await product.clickProceedToCheckout();
         await page.waitForTimeout(5000);   
     });
     
