@@ -269,6 +269,8 @@ test.describe.serial.only("Register and Login and Checkout Full FLow", () => {
         await cart.assertBillinAddressLabel("Your billing address");
         await cart.assertAddressDetailsLabel("Review Your Order");
         await product.assertTableHeaders();
+        await page.waitForTimeout(2000);
+
 
         // await product.assertDetailPageCartItems(
         //     {
@@ -278,6 +280,8 @@ test.describe.serial.only("Register and Login and Checkout Full FLow", () => {
         //     }
         //   );
     
+
+        await cart.assertOrderMessageText("If you would like to add a comment about your order, please write it in the field below.");
 
         await page.waitForTimeout(5000);   
     });

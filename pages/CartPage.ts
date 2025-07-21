@@ -8,7 +8,7 @@ export class CartPage{
     readonly addressLabelSelector:Locator;
     readonly deliveryAddressLabelSelector:Locator;
     readonly billingAddressLabelSelector:Locator;
-
+    readonly orderMessageLabelSelector: Locator;
 
 
     constructor(page:Page){
@@ -18,7 +18,7 @@ export class CartPage{
         this.addressLabelSelector = page.locator(".step-one h2.heading");
         this.deliveryAddressLabelSelector = page.locator("#address_delivery .page-subheading");
         this.billingAddressLabelSelector = page.locator("#address_invoice .page-subheading");
-
+        this.orderMessageLabelSelector = page.locator("#ordermsg label");
 
     }
 
@@ -37,6 +37,10 @@ export class CartPage{
 
     async assertBillinAddressLabel(expectedText:string){
         await expect(this.billingAddressLabelSelector).toHaveText(expectedText);
+    }
+
+    async assertOrderMessageText(expectedText:string){
+        await expect(this.orderMessageLabelSelector).toHaveText(expectedText);
     }
 
 
