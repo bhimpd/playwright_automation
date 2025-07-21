@@ -1,5 +1,7 @@
 import {Page, Locator, expect} from "@playwright/test";
 import { Helper } from "../helpers/helper";
+import { faker } from '@faker-js/faker';
+
 
 export class CartPage{
     readonly page:Page;
@@ -9,6 +11,8 @@ export class CartPage{
     readonly deliveryAddressLabelSelector:Locator;
     readonly billingAddressLabelSelector:Locator;
     readonly orderMessageLabelSelector: Locator;
+    readonly orderTextAreaSelector: Locator;
+
 
 
     constructor(page:Page){
@@ -19,6 +23,8 @@ export class CartPage{
         this.deliveryAddressLabelSelector = page.locator("#address_delivery .page-subheading");
         this.billingAddressLabelSelector = page.locator("#address_invoice .page-subheading");
         this.orderMessageLabelSelector = page.locator("#ordermsg label");
+        this.orderTextAreaSelector = page.locator("#ordermsg textarea");
+
 
     }
 
@@ -43,5 +49,8 @@ export class CartPage{
         await expect(this.orderMessageLabelSelector).toHaveText(expectedText);
     }
 
+    async typeOrderMessage(expectedText:string){
+        await this.orderTextAreaSelector.fill(expectedText);
+    }
 
 }
