@@ -1,6 +1,6 @@
 import {Page, Locator, expect} from "@playwright/test";
 import { Helper } from "../helpers/helper";
-import { faker } from '@faker-js/faker';
+import { UserDetails } from "../utilis/userDetails"; // ✅ Make sure to import the type
 
 
 export class CartPage{
@@ -13,8 +13,11 @@ export class CartPage{
     readonly orderMessageLabelSelector: Locator;
     readonly orderTextAreaSelector: Locator;
     readonly placeOrderSelector: Locator;
-
-
+    readonly firstLastNameSelector: Locator;
+    readonly addressSelector: Locator;
+    readonly fullAddressSelector: Locator;
+    readonly countrySelector: Locator;
+    readonly phoneSelector: Locator;
 
 
     constructor(page:Page){
@@ -27,8 +30,11 @@ export class CartPage{
         this.orderMessageLabelSelector = page.locator("#ordermsg label");
         this.orderTextAreaSelector = page.locator("#ordermsg textarea");
         this.placeOrderSelector = page.locator('a[href="/payment"]');
-
-
+        this.firstLastNameSelector = page.locator('#address_delivery .address_firstname.address_lastname');
+        this.addressSelector = page.locator('#address_delivery .address_address1.address_address2');
+        this.fullAddressSelector = page.locator('#address_delivery .address_city.address_state_name.address_postcode"');
+        this.countrySelector = page.locator('#address_delivery .address_country_name');
+        this.phoneSelector = page.locator('#address_delivery .address_phone');
 
     }
 
@@ -61,5 +67,15 @@ export class CartPage{
         await this.helper.assertLinkWithTextAndHrefAssertion(this.placeOrderSelector,expectedText,expectedHref);
     }
 
+
+    async deliveryAddressInfo(expecteddata: UserDetails) {
+        const addr = expecteddata.address;
+      
+        await expect(this.firstLastNameSelector).toContainText(`${addr.firstName} ${addr.lastName}`);
+        await expect(this.addressSelector).toContainText(`${addr.address1} ${addr.address2}`);
+        await expect(this.fullAddressSelector).toContainText(`${addr.city} ${addr.state} ${addr.zipcode}`);
+        await expect(this.countrySelector).toContainText(addr.country);
+        await expect(this.phoneSelector).toContainText(addr.mobile);
+      }
 
 }
