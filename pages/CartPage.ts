@@ -12,6 +12,8 @@ export class CartPage{
     readonly billingAddressLabelSelector:Locator;
     readonly orderMessageLabelSelector: Locator;
     readonly orderTextAreaSelector: Locator;
+    readonly placeOrderSelector: Locator;
+
 
 
 
@@ -24,6 +26,8 @@ export class CartPage{
         this.billingAddressLabelSelector = page.locator("#address_invoice .page-subheading");
         this.orderMessageLabelSelector = page.locator("#ordermsg label");
         this.orderTextAreaSelector = page.locator("#ordermsg textarea");
+        this.placeOrderSelector = page.locator('a[href="/payment"]');
+
 
 
     }
@@ -52,5 +56,10 @@ export class CartPage{
     async typeOrderMessage(expectedText:string){
         await this.orderTextAreaSelector.fill(expectedText);
     }
+
+    async placeOrderAssertion(expectedText: string, expectedHref: string) {
+        await this.helper.assertLinkWithTextAndHrefAssertion(this.placeOrderSelector,expectedText,expectedHref);
+    }
+
 
 }

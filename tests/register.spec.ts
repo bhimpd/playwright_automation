@@ -284,6 +284,7 @@ test.describe.serial.only("Register and Login and Checkout Full FLow", () => {
         await cart.assertOrderMessageText("If you would like to add a comment about your order, please write it in the field below.");
         const text = faker.lorem.sentences(2);
         await cart.typeOrderMessage(text);
+        await cart.placeOrderAssertion("Place Order", "/place_order");
 
 
         await page.waitForTimeout(5000);   
