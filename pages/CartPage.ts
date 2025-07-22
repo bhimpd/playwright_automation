@@ -14,7 +14,9 @@ export class CartPage{
     readonly orderTextAreaSelector: Locator;
     readonly placeOrderSelector: Locator;
     readonly firstLastNameSelector: Locator;
-    readonly addressSelector: Locator;
+    readonly companySelector: Locator;
+    readonly streetSelector: Locator;
+    readonly districtSelector: Locator;
     readonly fullAddressSelector: Locator;
     readonly countrySelector: Locator;
     readonly phoneSelector: Locator;
@@ -31,8 +33,10 @@ export class CartPage{
         this.orderTextAreaSelector = page.locator("#ordermsg textarea");
         this.placeOrderSelector = page.locator('a[href="/payment"]');
         this.firstLastNameSelector = page.locator('#address_delivery .address_firstname.address_lastname');
-        this.addressSelector = page.locator('#address_delivery .address_address1.address_address2');
-        this.fullAddressSelector = page.locator('#address_delivery .address_city.address_state_name.address_postcode"');
+        this.companySelector = page.locator('#address_delivery .address_address1.address_address2').nth(0);
+        this.streetSelector = page.locator('#address_delivery .address_address1.address_address2').nth(1);
+        this.districtSelector = page.locator('#address_delivery .address_address1.address_address2').nth(2);
+        this.fullAddressSelector = page.locator('#address_delivery .address_city.address_state_name.address_postcode');
         this.countrySelector = page.locator('#address_delivery .address_country_name');
         this.phoneSelector = page.locator('#address_delivery .address_phone');
 
@@ -72,7 +76,9 @@ export class CartPage{
         const addr = expecteddata.address;
       
         await expect(this.firstLastNameSelector).toContainText(`${addr.firstName} ${addr.lastName}`);
-        await expect(this.addressSelector).toContainText(`${addr.address1} ${addr.address2}`);
+        await expect(this.companySelector).toContainText(addr.company);
+        await expect(this.streetSelector).toContainText(addr.address1);
+        await expect(this.districtSelector).toContainText(addr.address2);
         await expect(this.fullAddressSelector).toContainText(`${addr.city} ${addr.state} ${addr.zipcode}`);
         await expect(this.countrySelector).toContainText(addr.country);
         await expect(this.phoneSelector).toContainText(addr.mobile);
