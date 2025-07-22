@@ -285,6 +285,16 @@ test.describe.serial.only("Register and Login and Checkout Full FLow", () => {
         const text = faker.lorem.sentences(2);
         await cart.typeOrderMessage(text);
         await cart.placeOrderAssertion("Place Order", "/payment");
+        await cart.clickPlaceOrderButton();
+
+        await helper.urlAssertion("https://automationexercise.com/payment");
+
+        await cart.assertAddressDetailsLabel("Payment")
+        await cart.nameOnCardLabelAssertion("Name on Card");
+        await cart.cardNumberLabelAssertion("Card Number");
+        await cart.cvcLabelAssertion("CVC");
+        await cart.expirationLabelAssertion("Expiration");
+        await cart.payConfirmOrderLabelAssertion("Pay and Confirm Order");
 
 
         await page.waitForTimeout(5000);   

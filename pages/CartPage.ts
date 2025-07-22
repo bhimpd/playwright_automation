@@ -20,6 +20,12 @@ export class CartPage{
     readonly fullAddressSelector: Locator;
     readonly countrySelector: Locator;
     readonly phoneSelector: Locator;
+    readonly nameOnCardLabelSelector: Locator;
+    readonly cardNumberLabelSelector: Locator;
+    readonly CVCLabelSelector: Locator;
+    readonly expirationLabelSelector: Locator;
+    readonly payAndConfirmOrderLabelSelector: Locator;
+
 
 
     constructor(page:Page){
@@ -39,6 +45,14 @@ export class CartPage{
         this.fullAddressSelector = page.locator('#address_delivery .address_city.address_state_name.address_postcode');
         this.countrySelector = page.locator('#address_delivery .address_country_name');
         this.phoneSelector = page.locator('#address_delivery .address_phone');
+
+
+        this.nameOnCardLabelSelector = page.locator('#payment-form .control-label').nth(0);
+        this.cardNumberLabelSelector = page.locator('#payment-form .card .control-label');
+        this.CVCLabelSelector = page.locator('#payment-form .cvc .control-label');
+        this.expirationLabelSelector = page.locator('#payment-form .control-label').nth(3);
+        this.payAndConfirmOrderLabelSelector = page.locator('#submit');
+
 
     }
 
@@ -71,6 +85,10 @@ export class CartPage{
         await this.helper.assertLinkWithTextAndHrefAssertion(this.placeOrderSelector,expectedText,expectedHref);
     }
 
+    async clickPlaceOrderButton() {
+        await this.placeOrderSelector.click();
+    }
+
 
     async deliveryAddressInfo(expecteddata: UserDetails) {
         const addr = expecteddata.address;
@@ -84,4 +102,24 @@ export class CartPage{
         await expect(this.phoneSelector).toContainText(addr.mobile);
       }
 
+    async nameOnCardLabelAssertion(expectedText:string){
+        await this.helper.textAssertion(this.nameOnCardLabelSelector, expectedText);
+    }
+
+
+    async cardNumberLabelAssertion(expectedText:string){
+        await expect(this.cardNumberLabelSelector).toHaveText(expectedText); 
+    }
+
+    async cvcLabelAssertion(expectedText:string){
+        await expect(this.CVCLabelSelector).toHaveText(expectedText); 
+    }
+
+    async expirationLabelAssertion(expectedText:string){
+        await expect(this.expirationLabelSelector).toHaveText(expectedText); 
+    }
+
+    async payConfirmOrderLabelAssertion(expectedText:string){
+        await expect(this.payAndConfirmOrderLabelSelector).toHaveText(expectedText); 
+    }
 }
