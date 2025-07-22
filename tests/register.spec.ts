@@ -207,6 +207,7 @@ test.describe.serial.only("Register and Login and Checkout Full FLow", () => {
 
         const { email, password } = getCredentials(); // 👈 Read saved email & password
 
+
         await register.login(email, password); 
 
         await helper.urlAssertion("https://automationexercise.com");
@@ -262,11 +263,13 @@ test.describe.serial.only("Register and Login and Checkout Full FLow", () => {
         await cart.assertAddressDetailsLabel("Address Details");
         await cart.assertDeliveryAddressLabel("Your delivery address");
         await cart.assertBillinAddressLabel("Your billing address");
-        
-        const userinfo = getUserDetails();
-
         await cart.assertAddressDetailsLabel("Review Your Order");
+
+        const userinfo = getUserDetails();
+        await cart.deliveryAddressInfo(userinfo);
+ 
         await product.assertTableHeaders();
+        await page.waitForTimeout(2000);
 
 
         // await product.assertDetailPageCartItems(
@@ -282,9 +285,6 @@ test.describe.serial.only("Register and Login and Checkout Full FLow", () => {
         const text = faker.lorem.sentences(2);
         await cart.typeOrderMessage(text);
         await cart.placeOrderAssertion("Place Order", "/payment");
-
-
-
 
 
         await page.waitForTimeout(5000);   
