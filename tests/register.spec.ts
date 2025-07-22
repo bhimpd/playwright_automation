@@ -295,7 +295,12 @@ test.describe.serial.only("Register and Login and Checkout Full FLow", () => {
         await cart.cvcLabelAssertion("CVC");
         await cart.expirationLabelAssertion("Expiration");
         await cart.payConfirmOrderLabelAssertion("Pay and Confirm Order");
+       
         await cart.fillPaymentDetails();
+
+        await cart.clickPayAndConfirmButton();
+        await cart.assertOrderPlacedText("Order Placed!");
+        await cart.assertCongratulationText("Congratulations! Your order has been confirmed!");
 
 
         await page.waitForTimeout(5000);   

@@ -32,6 +32,12 @@ export class CartPage{
     readonly cvcMonthnputSelector:Locator;
     readonly cvcYearInputSelector:Locator;
 
+
+    readonly orderPlacedSelector: Locator;
+    readonly congratulationLabelSelector: Locator;
+
+
+
     constructor(page:Page){
         this.page = page;
         this.helper = new Helper(page);
@@ -64,9 +70,8 @@ export class CartPage{
         this.cvcMonthnputSelector = page.locator('input[name="expiry_month"]');
         this.cvcYearInputSelector = page.locator('input[name="expiry_year"]');
 
-
-
-
+        this.orderPlacedSelector = page.locator('h2[data-qa="order-placed"]');
+        this.congratulationLabelSelector = page.locator('p[style="font-size: 20px; font-family: garamond;"]');
 
     }
 
@@ -143,9 +148,20 @@ export class CartPage{
         await this.cvcInputSelector.fill("123");
         await this.cvcMonthnputSelector.fill("July");
         await this.cvcYearInputSelector.fill("2025");
-
-
     }
 
+
+    async clickPayAndConfirmButton() {
+        await this.payAndConfirmOrderLabelSelector.click();
+    }
+
+
+    async assertOrderPlacedText(expectedText:string){
+        await expect(this.orderPlacedSelector).toContainText(expectedText);
+    }
+
+    async assertCongratulationText(expectedText:string){
+        await expect(this.congratulationLabelSelector).toContainText(expectedText);
+    }
     
 }
