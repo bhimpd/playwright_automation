@@ -272,13 +272,13 @@ test.describe.serial.only("Register and Login and Checkout Full FLow", () => {
         await page.waitForTimeout(2000);
 
 
-        // await product.assertDetailPageCartItems(
-        //     {
-        //       name: searchedProduct.name,
-        //       price: searchedProduct.price,
-        //       quantity: 4,
-        //     }
-        //   );
+        await product.assertDetailPageCartItems(
+            {
+              name: searchedProduct.name,
+              price: searchedProduct.price,
+              quantity: 4,
+            }
+          );
     
 
         await cart.assertOrderMessageText("If you would like to add a comment about your order, please write it in the field below.");
