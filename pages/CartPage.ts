@@ -26,7 +26,11 @@ export class CartPage{
     readonly expirationLabelSelector: Locator;
     readonly payAndConfirmOrderLabelSelector: Locator;
 
-
+    readonly nameOnCardInputSelector:Locator;
+    readonly cardNumberInputSelector:Locator;
+    readonly cvcInputSelector:Locator;
+    readonly cvcMonthnputSelector:Locator;
+    readonly cvcYearInputSelector:Locator;
 
     constructor(page:Page){
         this.page = page;
@@ -52,6 +56,16 @@ export class CartPage{
         this.CVCLabelSelector = page.locator('#payment-form .cvc .control-label');
         this.expirationLabelSelector = page.locator('#payment-form .control-label').nth(3);
         this.payAndConfirmOrderLabelSelector = page.locator('#submit');
+
+
+        this.nameOnCardInputSelector = page.locator('input[name="name_on_card"]');
+        this.cardNumberInputSelector = page.locator('input[name="card_number"]');
+        this.cvcInputSelector = page.locator('input[name="cvc"]');
+        this.cvcMonthnputSelector = page.locator('input[name="expiry_month"]');
+        this.cvcYearInputSelector = page.locator('input[name="expiry_year"]');
+
+
+
 
 
     }
@@ -122,4 +136,16 @@ export class CartPage{
     async payConfirmOrderLabelAssertion(expectedText:string){
         await expect(this.payAndConfirmOrderLabelSelector).toHaveText(expectedText); 
     }
+
+    async fillPaymentDetails(){
+        await this.nameOnCardInputSelector.fill("Bhim");
+        await this.cardNumberInputSelector.fill("4242 4242 4242 4242");
+        await this.cvcInputSelector.fill("123");
+        await this.cvcMonthnputSelector.fill("July");
+        await this.cvcYearInputSelector.fill("2025");
+
+
+    }
+
+    
 }
