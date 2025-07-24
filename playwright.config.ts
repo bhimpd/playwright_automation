@@ -1,6 +1,10 @@
 import { defineConfig, devices } from '@playwright/test';
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 
 export default defineConfig({
+  
   testDir: './tests',
   timeout: 120_000,
   /* Run tests in files in parallel */
@@ -44,5 +48,7 @@ export default defineConfig({
     },
 
   ],
+
+
 
 });
