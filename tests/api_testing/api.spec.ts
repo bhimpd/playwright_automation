@@ -20,4 +20,14 @@ test("API: GET-Request:: Fetch the products", async({request}) => {
 
     expect(data.products.length).toBeGreaterThan(0);
 
+    data.products.forEach((product:any,index:number)=>{
+        // Top-level fields
+        expect(product).toHaveProperty('id');
+        expect(product).toHaveProperty('name');
+        expect(product).toHaveProperty('price');
+        expect(product).toHaveProperty('brand');
+        expect(product).toHaveProperty('category');
+        
+    });
+
 });
