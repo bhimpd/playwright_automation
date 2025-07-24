@@ -23,17 +23,29 @@ test("API: GET-Request:: Fetch the products", async({request}) => {
     data.products.forEach((product:any,index:number)=>{
         // Top-level fields
         expect(product).toHaveProperty('id');
+        expect(Number.isInteger(product.id)).toBe(true);
+
         expect(product).toHaveProperty('name');
+        expect(typeof product.name).toBe('string');
+      
         expect(product).toHaveProperty('price');
+        expect(typeof product.price).toBe('string');
+      
         expect(product).toHaveProperty('brand');
+        expect(typeof product.brand).toBe('string');
+      
         expect(product).toHaveProperty('category');
-
         expect(typeof product.category).toBe("object");
-        expect(product.category).toHaveProperty('usertype');
-        expect(product.category).toHaveProperty('category');
+
+        
         expect(product.category.usertype).toHaveProperty('usertype');
+        expect (typeof product.category.usertype.usertype).toBe("string");
 
+        expect(product.category).toHaveProperty('usertype');
+        expect (typeof product.category.usertype).toBe("object");
 
+        expect(product.category).toHaveProperty('category');
+        expect (typeof product.category.category).toBe("string");
 
     });
 
