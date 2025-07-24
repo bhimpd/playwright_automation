@@ -27,7 +27,14 @@ test("API: GET-Request:: Fetch the products", async({request}) => {
         expect(product).toHaveProperty('price');
         expect(product).toHaveProperty('brand');
         expect(product).toHaveProperty('category');
-        
+
+        expect(typeof product.category).toBe("object");
+        expect(product.category).toHaveProperty('usertype');
+        expect(product.category).toHaveProperty('category');
+        expect(product.category.usertype).toHaveProperty('usertype');
+
+
+
     });
 
 });
