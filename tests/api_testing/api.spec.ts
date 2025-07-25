@@ -55,6 +55,7 @@ test("API: GET-Request:: Fetch the products", async ({ request }) => {
       expect(product.category).toHaveProperty("category");
       expect(typeof product.category.category).toBe("string");
       expect(product.category.category.trim().length).toBeGreaterThan(0);
+      
     } catch (error) {
       throw new Error(
         `Assertion failed for product at index ${index}: \n${JSON.stringify(product, null, 2)}\n\nError: ${error}`
@@ -65,4 +66,10 @@ test("API: GET-Request:: Fetch the products", async ({ request }) => {
   // Unique ID check
   const uniqueIds = new Set(productIds);
   expect(uniqueIds.size).toBe(productIds.length);
+});
+
+
+test("API : POST-Request:: Create the Products", async ({ request })=>{
+  
+
 });
