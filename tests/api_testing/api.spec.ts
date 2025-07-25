@@ -132,3 +132,21 @@ test("API :: GET-Request:: Fetch the Brands", async({request})=>{
 
 
 });
+
+
+test("API :: PUT - All Brand Lists", async({request})=>{
+
+  const baseUrl = process.env.API_BASEURL;
+  const response = await request.post(`${baseUrl}/brandsList`);
+
+  expect (response.status()).toBe(200);
+
+  const data = await response.json();
+
+  expect (data).toHaveProperty("responseCode");
+  expect (data.responseCode).toBe(405);
+
+  expect (data).toHaveProperty("message");
+  expect (data.message).toBe("This request method is not supported.");
+
+});
