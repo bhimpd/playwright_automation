@@ -100,12 +100,35 @@ test("API :: GET-Request:: Fetch the Brands", async({request})=>{
   expect (data.responseCode).toBe(200);
 
   expect (data).toHaveProperty("brands");
-  expect(Array.isArray(data.brands)).toBeTruthy();
+  expect (Array.isArray(data.brands)).toBeTruthy();
 
   const brandsLength = data.brands.length;
 
   expect (brandsLength).toBeGreaterThan(0);
 
+  const brandIds: number[] = [];
+
+  data.brands.forEach((brand:any, index:number) =>{
+
+    try {
+      expect (brand).toHaveProperty("id");
+      expect(Number.isInteger(brand.id)).toBe(true);
+  
+      expect (brand.id).toBeGreaterThan(0);
+      brandIds.push(brand.id);
+  
+      expect (brand).toHaveProperty("brand");
+      expect (typeof brand.brand).toBe("string");
+      expect(brand.brand.trim().length).toBeGreaterThan(0);
+  
+    } catch (error) {
+      throw new Error(`Validation failed at index ${index}: ${JSON.stringify(brand, null, 2)}\nError: ${error}`);
+    }
+   
+    // Unique ID check
+  const uniqueIds = new Set(brandIds);
+  expect(uniqueIds.size).toBe(brandIds.length);
+  });
 
 
 });
