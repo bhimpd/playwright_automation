@@ -79,18 +79,33 @@ test("API : POST-Request:: Create the Products", async ({ request })=>{
   const data = await response.json();
   console.log("Response Data ::", JSON.stringify(data, null, 4));
 
-
   expect (data).toHaveProperty("responseCode");
   expect (data.responseCode).toBe(405);
   
   expect (data).toHaveProperty("message");
   expect (data.message).toBe("This request method is not supported.");
   
-
-
 });
 
 
 test("API :: GET-Request:: Fetch the Brands", async({request})=>{
+  const baseUrl = process.env.API_BASEURL;
+
+  const response = await request.get(`${baseUrl}/brandsList`);
+  expect (response.status()).toBe(200);
+
+  const data = await response.json();
+
+  expect (data).toHaveProperty("responseCode");
+  expect (data.responseCode).toBe(200);
+
+  expect (data).toHaveProperty("brands");
+  expect(Array.isArray(data.brands)).toBeTruthy();
+
+  const brandsLength = data.brands.length;
+
+  expect (brandsLength).toBeGreaterThan(0);
+
+
 
 });
