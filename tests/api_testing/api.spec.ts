@@ -70,6 +70,22 @@ test("API: GET-Request:: Fetch the products", async ({ request }) => {
 
 
 test("API : POST-Request:: Create the Products", async ({ request })=>{
+  const baseUrl = process.env.API_BASEURL;
+
+  const response = await request.post(`${baseUrl}/productsList`);
+  console.log("RESPONSE::::: ", response);
+  expect (response.status()).toBe(200);
+
+  const data = await response.json();
+  console.log("Response Data ::", JSON.stringify(data, null, 4));
+
+
+  expect (data).toHaveProperty("responseCode");
+  expect (data.responseCode).toBe(405);
   
+  expect (data).toHaveProperty("message");
+  expect (data.message).toBe("This request method is not supported.");
+  
+
 
 });
