@@ -25,6 +25,8 @@ test("API: GET-Request:: Fetch the products", async ({ request }) => {
       // Top-level fields
       expect(product).toHaveProperty("id");
       expect(Number.isInteger(product.id)).toBe(true);
+      expect(product.id).toBeGreaterThan(0);
+
       productIds.push(product.id);
 
       expect(product).toHaveProperty("name");
