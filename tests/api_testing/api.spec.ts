@@ -89,3 +89,8 @@ test("API : POST-Request:: Create the Products", async ({ request })=>{
 
 
 });
+
+
+test("API :: GET-Request:: Fetch the Brands", async({request})=>{
+
+});
