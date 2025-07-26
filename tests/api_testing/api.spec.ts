@@ -226,5 +226,17 @@ test.describe("API: POST /searchProduct", () => {
     expect(data.products.length).toBe(0); 
   });
 
+  test("Negative: Missing search_product field", async ({ request }) => {
+    const response = await request.post(`${baseUrl}/searchProduct`, {
+      form: {} 
+    });
+
+    expect(response.status()).toBe(200);
+    const data = await response.json();
+
+    expect (data.responseCode).toBe(400);
+    expect (data.message).toBe("Bad request, search_product parameter is missing in POST request.")
+  });
+
 
 });
