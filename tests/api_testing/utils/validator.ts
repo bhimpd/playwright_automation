@@ -51,5 +51,6 @@ export async function assertSuccessfulResponse(response:any){
  expect(data).toHaveProperty("responseCode");
  expect(data.responseCode).toBe(200);
 
- return data; // return parsed data for further assertions
+ return data; 
+ 
 }

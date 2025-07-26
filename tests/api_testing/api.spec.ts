@@ -229,7 +229,6 @@ test.describe("API:: POST : Verify Login", () => {
     expect(data.message).toBe("User not found!");
   });
   
-
   test("Negative: Verify Login without both email and password parameters", async ({ request }) => {
     const response = await request.post(`${baseUrl}/verifyLogin`, {
       form: {}
@@ -305,4 +304,19 @@ test.describe("API:: POST : Verify Login", () => {
     expect(data.message).toBe("User not found!");
   });
   
+});
+
+
+test("API:: DELETE :: Delete the users", async ({request}) =>{
+
+  const response = await request.delete(`${baseUrl}/verifyLogin`);
+  expect (response.status()).toBe(200);
+
+  const data = await response.json();
+  expect (data).toHaveProperty("responseCode");
+  expect (data.responseCode).toBe(405);
+  
+  expect (data).toHaveProperty("message");
+  expect (data.message).toBe("This request method is not supported.");
+
 });
