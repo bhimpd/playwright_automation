@@ -150,3 +150,21 @@ test("API :: PUT - All Brand Lists", async({request})=>{
   expect (data.message).toBe("This request method is not supported.");
 
 });
+
+
+test("API : POST:: Search the product lists", async({request}) =>{
+  const baseUrl = process.env.API_BASEURL;
+  const searchKeyword = "top";
+  const response = await request.post(`${baseUrl}/searchProduct`, {
+    form:{
+      search_product : searchKeyword,
+    }
+  });
+
+  expect (response.status()).toBe(200);
+
+  const data = response.json();
+
+
+
+})
