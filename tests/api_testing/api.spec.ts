@@ -114,14 +114,16 @@ test("API :: PUT - All Brand Lists", async({request})=>{
 
 test.describe("API: POST /searchProduct", () => {
   
-  test("Positive: Search with valid keyword returns products", async ({ request }) => {
-    const searchKeyword = "top"; // You can parametrize this later
+  const searchKeywords = ["top", "tshirt", "skirt", "jean", "dress"];
 
-    const response = await request.post(`${baseUrl}/searchProduct`, {
-      form: { 
-        search_product: searchKeyword, 
-      }
-    });
+  searchKeywords.forEach((keyword) => {
+    test(`Positive: Search for "${keyword}" returns matching products`, async ({ request }) => {
+      const response = await request.post(`${baseUrl}/searchProduct`, {
+        form: {
+          search_product: keyword,
+        },
+      });
+  
 
     expect (response.status()).toBe(200);
 
@@ -167,21 +169,23 @@ test.describe("API: POST /searchProduct", () => {
         expect(product.category.category.trim().length).toBeGreaterThan(0);
         
       // ✅ Assert keyword is found in product name or category
-      const nameIncludesKeyword = product.name.toLowerCase().includes(searchKeyword.toLowerCase());
-      const categoryIncludesKeyword = product.category.category.toLowerCase().includes(searchKeyword.toLowerCase());
+        const nameIncludesKeyword = product.name.toLowerCase().includes(keyword.toLowerCase());
+        const categoryIncludesKeyword = product.category.category.toLowerCase().includes(keyword.toLowerCase());
 
-      expect(nameIncludesKeyword || categoryIncludesKeyword).toBeTruthy();
-
+        expect(
+          nameIncludesKeyword || categoryIncludesKeyword
+        ).toBeTruthy();
       } catch (err) {
         throw new Error(
           `Validation failed at index ${index}:\n${JSON.stringify(product, null, 2)}\nError: ${err}`
         );
       }
     });
-
+  });
   });
 
   test("Negative: Search with non-matching keyword returns empty list", async ({ request }) => {
+
     const response = await request.post(`${baseUrl}/searchProduct`, {
       form: { 
         search_product: "random" 
