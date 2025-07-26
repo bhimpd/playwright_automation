@@ -1,5 +1,5 @@
 import { expect, test, request } from "@playwright/test";
-import { validateProduct } from "./utils/validator";
+import { validateProduct,assertSuccessfulResponse } from "./utils/validator";
 const baseUrl = process.env.API_BASEURL;
 
 test("API: GET-Request:: Fetch the products", async ({ request }) => {
@@ -7,13 +7,9 @@ test("API: GET-Request:: Fetch the products", async ({ request }) => {
   const response = await request.get(`${baseUrl}/productsList`);
   console.log("RESPONSE:::::", response);
 
-  const data = await response.json();
-  console.log("Response Data ::", JSON.stringify(data, null, 4));
-
   // Basic response checks
-  expect(response.status()).toBe(200);
-  expect(data).toHaveProperty("responseCode");
-  expect(data.responseCode).toBe(200);
+  const data = await assertSuccessfulResponse(response); 
+  console.log("Response Data ::", JSON.stringify(data, null, 4));
   
   expect(data).toHaveProperty("products");
   expect(Array.isArray(data.products)).toBeTruthy();
@@ -53,12 +49,7 @@ test("API : POST-Request:: Create the Products", async ({ request })=>{
 test("API :: GET-Request:: Fetch the Brands", async({request})=>{
 
   const response = await request.get(`${baseUrl}/brandsList`);
-  expect (response.status()).toBe(200);
-
-  const data = await response.json();
-
-  expect (data).toHaveProperty("responseCode");
-  expect (data.responseCode).toBe(200);
+  const data = await assertSuccessfulResponse(response); 
 
   expect (data).toHaveProperty("brands");
   expect (Array.isArray(data.brands)).toBeTruthy();
@@ -100,7 +91,6 @@ test("API :: PUT - All Brand Lists", async({request})=>{
   const response = await request.post(`${baseUrl}/brandsList`);
 
   expect (response.status()).toBe(200);
-
   const data = await response.json();
 
   expect (data).toHaveProperty("responseCode");
@@ -124,15 +114,9 @@ test.describe("API: POST /searchProduct", () => {
         },
       });
   
-
-    expect (response.status()).toBe(200);
-
-    const data = await response.json();
+    const data = await assertSuccessfulResponse(response); 
     console.log("Search Result Data:", JSON.stringify(data, null, 4));
-
-
-    expect(data).toHaveProperty("responseCode");
-    expect(data.responseCode).toBe(200);
+ 
     expect(data).toHaveProperty("products");
     expect(Array.isArray(data.products)).toBeTruthy();
 
@@ -175,13 +159,13 @@ test.describe("API: POST /searchProduct", () => {
         expect(
           nameIncludesKeyword || categoryIncludesKeyword
         ).toBeTruthy();
-      } catch (err) {
-        throw new Error(
-          `Validation failed at index ${index}:\n${JSON.stringify(product, null, 2)}\nError: ${err}`
-        );
-      }
+        } catch (err) {
+          throw new Error(
+            `Validation failed at index ${index}:\n${JSON.stringify(product, null, 2)}\nError: ${err}`
+          );
+        }
+      });
     });
-  });
   });
 
   test("Negative: Search with non-matching keyword returns empty list", async ({ request }) => {
@@ -224,11 +208,7 @@ test.describe("API:: POST : Verify Login", () => {
       }
     });
 
-    expect (response.status()).toBe(200);
-    const data = await response.json();
-
-    expect(data).toHaveProperty("responseCode");
-    expect(data.responseCode).toBe(200);
+    const data = await assertSuccessfulResponse(response); 
 
     expect(data).toHaveProperty("message");
     expect(data.message).toBe("User exists!");

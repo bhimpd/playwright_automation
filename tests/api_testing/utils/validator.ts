@@ -40,6 +40,16 @@ export function validateProduct(product: any, index: number): void {
 }
 
 
-export function validateResponseCode(){
-  
+export async function assertSuccessfulResponse(response:any){
+ // Assert HTTP status code is 200
+ expect(response.status()).toBe(200);
+
+ // Parse JSON
+ const data = await response.json();
+
+ // Assert responseCode inside JSON is also 200
+ expect(data).toHaveProperty("responseCode");
+ expect(data.responseCode).toBe(200);
+
+ return data; // return parsed data for further assertions
 }
