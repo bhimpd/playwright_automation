@@ -215,7 +215,22 @@ test.describe("API:: POST : Verify Login", () => {
 
   });
 
-  test("Negative: Verify Login without both email and password", async ({ request }) => {
+  test("Negative: Verify Login with Invalid Credentials", async ({ request }) => {
+    const response = await request.post(`${baseUrl}/verifyLogin`, {
+      form: {
+         email: "invalid@gmail.com",
+         password :"Invalid"
+        }
+    });
+  
+    const data = await response.json();
+    expect(response.status()).toBe(200);
+    expect(data.responseCode).toBe(404);
+    expect(data.message).toBe("User not found!");
+  });
+  
+
+  test("Negative: Verify Login without both email and password parameters", async ({ request }) => {
     const response = await request.post(`${baseUrl}/verifyLogin`, {
       form: {}
     });
@@ -226,7 +241,7 @@ test.describe("API:: POST : Verify Login", () => {
     expect(data.message).toBe("Bad request, email or password parameter is missing in POST request.");
   });
   
-  test("Negative: Verify Login without email", async ({ request }) => {
+  test("Negative: Verify Login without email parameter", async ({ request }) => {
     const response = await request.post(`${baseUrl}/verifyLogin`, {
       form: { password: "validpass123" }
     });
@@ -237,7 +252,7 @@ test.describe("API:: POST : Verify Login", () => {
     expect(data.message).toBe("Bad request, email or password parameter is missing in POST request.");
   });
   
-  test("Negative: Verify Login without password", async ({ request }) => {
+  test("Negative: Verify Login without password parameter", async ({ request }) => {
     const response = await request.post(`${baseUrl}/verifyLogin`, {
       form: { email: "valid@example.com" }
     });
@@ -246,6 +261,48 @@ test.describe("API:: POST : Verify Login", () => {
     expect(response.status()).toBe(200);
     expect(data.responseCode).toBe(400);
     expect(data.message).toBe("Bad request, email or password parameter is missing in POST request.");
+  });
+
+  test("Negative: Verify Login without email and password values", async ({ request }) => {
+    const response = await request.post(`${baseUrl}/verifyLogin`, {
+      form: {
+         email: "",
+         password :""
+        }
+    });
+  
+    const data = await response.json();
+    expect(response.status()).toBe(200);
+    expect(data.responseCode).toBe(404);
+    expect(data.message).toBe("User not found!");
+  });
+
+  test("Negative: Verify Login without email values", async ({ request }) => {
+    const response = await request.post(`${baseUrl}/verifyLogin`, {
+      form: {
+         email: "",
+         password :"Password1!"
+        }
+    });
+  
+    const data = await response.json();
+    expect(response.status()).toBe(200);
+    expect(data.responseCode).toBe(404);
+    expect(data.message).toBe("User not found!");
+  });
+
+  test("Negative: Verify Login without password values", async ({ request }) => {
+    const response = await request.post(`${baseUrl}/verifyLogin`, {
+      form: {
+         email: "dreamypd73@gmail.com",
+         password :""
+        }
+    });
+  
+    const data = await response.json();
+    expect(response.status()).toBe(200);
+    expect(data.responseCode).toBe(404);
+    expect(data.message).toBe("User not found!");
   });
   
 });
