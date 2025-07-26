@@ -212,5 +212,27 @@ test.describe("API: POST /searchProduct", () => {
     expect (data.message).toBe("Bad request, search_product parameter is missing in POST request.")
   });
 
+});
+
+test.describe("API:: POST : Verify Login", () => {
+
+  test("Positive: Verify Login with the valid credentials.", async ({request}) =>{
+    const response = await request.post(`${baseUrl}/verifyLogin`, {
+      form : {
+        "email":"dreamypd73@gmail.com",
+        "password":"Password1!"
+      }
+    });
+
+    expect (response.status()).toBe(200);
+    const data = await response.json();
+
+    expect(data).toHaveProperty("responseCode");
+    expect(data.responseCode).toBe(200);
+
+    expect(data).toHaveProperty("message");
+    expect(data.message).toBe("User exists!");
+
+  });
 
 });

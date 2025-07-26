@@ -37,5 +37,9 @@ export function validateProduct(product: any, index: number): void {
         `Validation failed at index ${index}:\n${JSON.stringify(product, null, 2)}\nError: ${err}`
       );
     }
-  }
+}
+
+
+export function validateResponseCode(){
   
+}
