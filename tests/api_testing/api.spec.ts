@@ -1,7 +1,7 @@
 import { expect, test, request } from "@playwright/test";
+const baseUrl = process.env.API_BASEURL;
 
 test("API: GET-Request:: Fetch the products", async ({ request }) => {
-  const baseUrl = process.env.API_BASEURL;
 
   const response = await request.get(`${baseUrl}/productsList`);
   console.log("RESPONSE:::::", response);
@@ -70,7 +70,6 @@ test("API: GET-Request:: Fetch the products", async ({ request }) => {
 
 
 test("API : POST-Request:: Create the Products", async ({ request })=>{
-  const baseUrl = process.env.API_BASEURL;
 
   const response = await request.post(`${baseUrl}/productsList`);
   console.log("RESPONSE::::: ", response);
@@ -89,7 +88,6 @@ test("API : POST-Request:: Create the Products", async ({ request })=>{
 
 
 test("API :: GET-Request:: Fetch the Brands", async({request})=>{
-  const baseUrl = process.env.API_BASEURL;
 
   const response = await request.get(`${baseUrl}/brandsList`);
   expect (response.status()).toBe(200);
@@ -136,7 +134,6 @@ test("API :: GET-Request:: Fetch the Brands", async({request})=>{
 
 test("API :: PUT - All Brand Lists", async({request})=>{
 
-  const baseUrl = process.env.API_BASEURL;
   const response = await request.post(`${baseUrl}/brandsList`);
 
   expect (response.status()).toBe(200);
@@ -152,19 +149,82 @@ test("API :: PUT - All Brand Lists", async({request})=>{
 });
 
 
-test("API : POST:: Search the product lists", async({request}) =>{
-  const baseUrl = process.env.API_BASEURL;
-  const searchKeyword = "top";
-  const response = await request.post(`${baseUrl}/searchProduct`, {
-    form:{
-      search_product : searchKeyword,
-    }
+test.describe("API: POST /searchProduct", () => {
+  
+  test("Positive: Search with valid keyword returns products", async ({ request }) => {
+    const response = await request.post(`${baseUrl}/searchProduct`, {
+      form: { 
+        search_product: "top" 
+      }
+    });
+
+    expect (response.status()).toBe(200);
+
+    const data = await response.json();
+    console.log("Search Result Data:", JSON.stringify(data, null, 4));
+
+
+    expect(data).toHaveProperty("responseCode");
+    expect(data.responseCode).toBe(200);
+    expect(data).toHaveProperty("products");
+    expect(Array.isArray(data.products)).toBeTruthy();
+
+    data.products.forEach((product: any, index: number) => {
+      try {
+        // Top-level fields
+        expect(product).toHaveProperty("id");
+        expect(Number.isInteger(product.id)).toBe(true);
+        expect(product.id).toBeGreaterThan(0);
+
+
+        expect(product).toHaveProperty("name");
+        expect(typeof product.name).toBe("string");
+        expect(product.name.trim().length).toBeGreaterThan(0);
+
+        expect(product).toHaveProperty("price");
+        expect(typeof product.price).toBe("string");
+        expect(product.price.trim().length).toBeGreaterThan(0);
+
+        expect(product).toHaveProperty("brand");
+        expect(typeof product.brand).toBe("string");
+        expect(product.brand.trim().length).toBeGreaterThan(0);
+
+        // Category object
+        expect(product).toHaveProperty("category");
+        expect(typeof product.category).toBe("object");
+
+        expect(product.category).toHaveProperty("usertype");
+        expect(typeof product.category.usertype).toBe("object");
+
+        expect(product.category.usertype).toHaveProperty("usertype");
+        expect(typeof product.category.usertype.usertype).toBe("string");
+        expect(product.category.usertype.usertype.trim().length).toBeGreaterThan(0);
+
+        expect(product.category).toHaveProperty("category");
+        expect(typeof product.category.category).toBe("string");
+        expect(product.category.category.trim().length).toBeGreaterThan(0);
+        
+      } catch (err) {
+        throw new Error(`Validation failed at index ${index}: ${JSON.stringify(product, null, 2)}\nError: ${err}`);
+      }
+    });
+
   });
 
-  expect (response.status()).toBe(200);
+  test("Negative: Search with non-matching keyword returns empty list", async ({ request }) => {
+    const response = await request.post(`${baseUrl}/searchProduct`, {
+      form: { 
+        search_product: "random" 
+      }
+    });
 
-  const data = response.json();
+    expect(response.status()).toBe(200);
+    const data = await response.json();
+
+    expect(data.responseCode).toBe(200);
+    expect(Array.isArray(data.products)).toBe(true);
+    expect(data.products.length).toBe(0); 
+  });
 
 
-
-})
+});
