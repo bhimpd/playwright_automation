@@ -215,4 +215,37 @@ test.describe("API:: POST : Verify Login", () => {
 
   });
 
+  test("Negative: Verify Login without both email and password", async ({ request }) => {
+    const response = await request.post(`${baseUrl}/verifyLogin`, {
+      form: {}
+    });
+  
+    const data = await response.json();
+    expect(response.status()).toBe(200);
+    expect(data.responseCode).toBe(400);
+    expect(data.message).toBe("Bad request, email or password parameter is missing in POST request.");
+  });
+  
+  test("Negative: Verify Login without email", async ({ request }) => {
+    const response = await request.post(`${baseUrl}/verifyLogin`, {
+      form: { password: "validpass123" }
+    });
+  
+    const data = await response.json();
+    expect(response.status()).toBe(200);
+    expect(data.responseCode).toBe(400);
+    expect(data.message).toBe("Bad request, email or password parameter is missing in POST request.");
+  });
+  
+  test("Negative: Verify Login without password", async ({ request }) => {
+    const response = await request.post(`${baseUrl}/verifyLogin`, {
+      form: { email: "valid@example.com" }
+    });
+  
+    const data = await response.json();
+    expect(response.status()).toBe(200);
+    expect(data.responseCode).toBe(400);
+    expect(data.message).toBe("Bad request, email or password parameter is missing in POST request.");
+  });
+  
 });
