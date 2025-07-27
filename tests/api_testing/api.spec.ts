@@ -389,3 +389,49 @@ test.describe("Create/Register User", () => {
   }
 
 });
+
+
+test.describe("Delete User Account", () => {
+
+  test("Positive: Create and then Delete User Account", async ({ request }) => {
+    // Step 1: Generate dynamic email
+    const randomEmail = `dreamypd73+${faker.string.alphanumeric(6)}@gmail.com`;
+
+    // Step 2: Create new account
+    const formData = {
+      ...create_user,
+      email: randomEmail,
+    };
+
+    const createResponse = await request.post(`${baseUrl}/createAccount`, {
+      form: formData,
+    });
+
+    expect(createResponse.status()).toBe(200);
+
+    const createData = await createResponse.json();
+
+    expect(createData).toHaveProperty("responseCode", 201);
+    expect(createData).toHaveProperty("message", "User created!");
+
+    console.log(`✅ User created with email: ${randomEmail}`);
+
+    // Step 3: Delete the created user account
+    const deleteResponse = await request.delete(`${baseUrl}/deleteAccount`, {
+      form: {
+        email: randomEmail,
+        password: "Password1!", // use the same password used during creation
+      },
+    });
+
+    expect(deleteResponse.status()).toBe(200);
+
+    const deleteData = await deleteResponse.json();
+
+    expect(deleteData).toHaveProperty("responseCode", 200);
+    expect(deleteData).toHaveProperty("message", "Account deleted!");
+
+    console.log(`🗑️ User account deleted for: ${randomEmail}`);
+  });
+
+});
