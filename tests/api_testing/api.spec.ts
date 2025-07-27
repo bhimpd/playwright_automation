@@ -1,6 +1,8 @@
 import { expect, test, request } from "@playwright/test";
 import { validateProduct,assertSuccessfulResponse } from "./utils/validator";
 const baseUrl = process.env.API_BASEURL;
+import { faker } from '@faker-js/faker';
+
 
 test("API: GET-Request:: Fetch the products", async ({ request }) => {
 
@@ -318,5 +320,46 @@ test("API:: DELETE :: Delete the users", async ({request}) =>{
   
   expect (data).toHaveProperty("message");
   expect (data.message).toBe("This request method is not supported.");
+
+});
+
+
+
+test("Positive: Create/Register User Account with valid data", async ({ request }) => {
+  const randomEmail = `dreamypd73+${faker.string.alphanumeric(6)}@gmail.com`;
+
+  const response = await request.post(`${baseUrl}/createAccount`, {
+    form: {
+      name: "JohnDoe",
+      email: randomEmail,
+      password: "Password1!",
+      title: "Mr",
+      birth_date: "15",
+      birth_month: "08",
+      birth_year: "1990",
+      firstname: "John",
+      lastname: "Doe",
+      company: "OpenAI",
+      address1: "123 Main St",
+      address2: "Apt 4B",
+      country: "India",
+      zipcode: "400001",
+      state: "Maharashtra",
+      city: "Mumbai",
+      mobile_number: "9876543210",
+    },
+  });
+
+  // Assert HTTP status code is 200
+  expect(response.status()).toBe(200);
+
+  // Parse JSON
+  const data = await response.json();
+
+  // Assert responseCode inside JSON is also 200
+  expect(data).toHaveProperty("responseCode");
+  expect(data.responseCode).toBe(201);
+  expect(data).toHaveProperty("message");
+  expect (data.message).toBe("User created!")
 
 });
