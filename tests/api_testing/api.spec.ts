@@ -3,6 +3,8 @@ import { validateProduct,assertSuccessfulResponse } from "./utils/validator";
 const baseUrl = process.env.API_BASEURL;
 import { faker } from '@faker-js/faker';
 
+import create_user from "../../fixtures/create_user.json"
+
 
 test("API: GET-Request:: Fetch the products", async ({ request }) => {
 
@@ -328,26 +330,13 @@ test("API:: DELETE :: Delete the users", async ({request}) =>{
 test("Positive: Create/Register User Account with valid data", async ({ request }) => {
   const randomEmail = `dreamypd73+${faker.string.alphanumeric(6)}@gmail.com`;
 
+  const formData = {
+    ...create_user,
+    email: randomEmail
+  };
+
   const response = await request.post(`${baseUrl}/createAccount`, {
-    form: {
-      name: "JohnDoe",
-      email: randomEmail,
-      password: "Password1!",
-      title: "Mr",
-      birth_date: "15",
-      birth_month: "08",
-      birth_year: "1990",
-      firstname: "John",
-      lastname: "Doe",
-      company: "OpenAI",
-      address1: "123 Main St",
-      address2: "Apt 4B",
-      country: "India",
-      zipcode: "400001",
-      state: "Maharashtra",
-      city: "Mumbai",
-      mobile_number: "9876543210",
-    },
+    form: formData
   });
 
   // Assert HTTP status code is 200
