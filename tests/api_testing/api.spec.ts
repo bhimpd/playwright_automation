@@ -328,33 +328,64 @@ test("API:: DELETE :: Delete the users", async ({request}) =>{
 });
 
 
+test.describe("Create/Register User", () => {
 
-test.describe("Create/Register User", () =>{
   test("Positive: Create/Register User Account with valid data", async ({ request }) => {
     const randomEmail = `dreamypd73+${faker.string.alphanumeric(6)}@gmail.com`;
-  
+
     const formData = {
       ...create_user,
-      email: randomEmail
+      email: randomEmail,
     };
-  
+
     const response = await request.post(`${baseUrl}/createAccount`, {
-      form: formData
+      form: formData,
     });
-    saveCredentials(randomEmail,"Password1!");
-  
-  
-    // Assert HTTP status code is 200
+
+    saveCredentials(randomEmail, "Password1!");
+
     expect(response.status()).toBe(200);
-  
-    // Parse JSON
     const data = await response.json();
-  
-    // Assert responseCode inside JSON is also 200
-    expect(data).toHaveProperty("responseCode");
+
     expect(data.responseCode).toBe(201);
-    expect(data).toHaveProperty("message");
-    expect (data.message).toBe("User created!")
-  
+    expect(data.message).toBe("User created!");
   });
-})
+
+  // ✅ Negative test cases
+  const negativeCases = [
+    {
+      missingField: "email",
+      expectedMessage: "Bad request, email parameter is missing in POST request.",
+    },
+    {
+      missingField: "name",
+      expectedMessage: "Bad request, name parameter is missing in POST request.",
+    },
+    {
+      missingField: "password",
+      expectedMessage: "Bad request, password parameter is missing in POST request.",
+    },
+  ];
+
+  for (const testCase of negativeCases) {
+    test(`Negative: Create Account without "${testCase.missingField}"`, async ({ request }) => {
+      const formData = {
+        ...create_user,
+        email: `dreamypd73+${faker.string.alphanumeric(6)}@gmail.com`,
+      };
+
+      delete formData[testCase.missingField];
+
+      const response = await request.post(`${baseUrl}/createAccount`, {
+        form: formData,
+      });
+
+      expect(response.status()).toBe(200);
+      const data = await response.json();
+
+      expect(data.responseCode).toBe(400);
+      expect(data.message).toBe(testCase.expectedMessage);
+    });
+  }
+
+});
