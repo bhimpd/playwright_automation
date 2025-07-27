@@ -453,5 +453,41 @@ test.describe("Delete User Account", () => {
     expect (data.message).toBe("Account not found!")
 
 
-  })
+  });
+
+
+  test("Negative : Deleting User without email parameter", async({request}) =>{
+    const response = await request.delete(`${baseUrl}/deleteAccount`, {
+      form: {
+        "password" :"Password1!"
+      }
+    });
+    expect (response.status()).toBe(200);
+
+    const data = await response.json();
+
+    expect (data).toHaveProperty("responseCode");
+    expect (data.responseCode).toBe(400);
+
+    expect (data).toHaveProperty("message");
+    expect (data.message).toBe("Bad request, email parameter is missing in DELETE request.")
+  });
+
+  test("Negative : Deleting User without password parameter", async({request}) =>{
+    const response = await request.delete(`${baseUrl}/deleteAccount`, {
+      form: {
+        "email" :"random@gmail.com"
+      }
+    });
+    expect (response.status()).toBe(200);
+
+    const data = await response.json();
+
+    expect (data).toHaveProperty("responseCode");
+    expect (data.responseCode).toBe(400);
+
+    expect (data).toHaveProperty("message");
+    expect (data.message).toBe("Bad request, password parameter is missing in DELETE request.")
+  });
+
 });
