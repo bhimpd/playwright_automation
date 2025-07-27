@@ -491,3 +491,53 @@ test.describe("Delete User Account", () => {
   });
 
 });
+
+
+test.describe("Update User Account", () => {
+
+  test("Positive: Create and then Update User Account", async ({ request }) => {
+    // Step 1: Generate dynamic email
+    const randomEmail = `dreamypd73+${faker.string.alphanumeric(6)}@gmail.com`;
+
+    // Step 2: Create user
+    const createResponse = await request.post(`${baseUrl}/createAccount`, {
+      form: {
+        ...create_user,
+        email: randomEmail,
+      }
+    });
+
+    expect(createResponse.status()).toBe(200);
+    const createData = await createResponse.json();
+    expect(createData.responseCode).toBe(201);
+    expect(createData.message).toBe("User created!");
+
+    console.log(`✅ Created user: ${randomEmail}`);
+
+    // Step 3: Update user with new values
+    const updatedFormData = {
+      ...create_user,
+      email: randomEmail, // same email
+      password: "Password1!", // same password
+      name: "UpdatedJohn",
+      firstname: "UpdatedFirst",
+      lastname: "UpdatedLast",
+      company: "UpdatedCompany",
+      address1: "999 New Street",
+      mobile_number: "9876540000"
+    };
+
+    const updateResponse = await request.put(`${baseUrl}/updateAccount`, {
+      form: updatedFormData
+    });
+
+    expect(updateResponse.status()).toBe(200);
+
+    const updateData = await updateResponse.json();
+    expect(updateData).toHaveProperty("responseCode", 200);
+    expect(updateData).toHaveProperty("message", "User updated!");
+
+    console.log(`🔁 User updated for: ${randomEmail}`);
+  });
+
+});
