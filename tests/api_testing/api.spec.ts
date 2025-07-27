@@ -434,4 +434,24 @@ test.describe("Delete User Account", () => {
     console.log(`🗑️ User account deleted for: ${randomEmail}`);
   });
 
+
+  test("Negative: Invalid User and Not Found when Deleting",  async({ request }) =>{
+    const response = await request.delete(`${baseUrl}/deleteAccount`, {
+      form: {
+        "email" :"randomemail@gmail.com",
+        "password" :"Password1!"
+      }
+    });
+    expect (response.status()).toBe(200);
+
+    const data = await response.json();
+
+    expect (data).toHaveProperty("responseCode");
+    expect (data.responseCode).toBe(404);
+
+    expect (data).toHaveProperty("message");
+    expect (data.message).toBe("Account not found!")
+
+
+  })
 });
